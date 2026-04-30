@@ -35,17 +35,25 @@ header{background:rgba(255,255,255,0.93);backdrop-filter:blur(12px);border-botto
 
 main{max-width:1100px;margin:0 auto;padding:1.75rem 1.5rem}
 
-.tabs{display:flex;gap:0.2rem;background:var(--card);border:1px solid var(--border);border-radius:12px;padding:0.25rem;width:fit-content;margin-bottom:1.75rem;box-shadow:var(--shadow-sm)}
+.tabs{display:flex;gap:0.2rem;background:var(--card);border:1px solid var(--border);border-radius:12px;padding:0.25rem;width:fit-content;margin-bottom:1.5rem;box-shadow:var(--shadow-sm)}
 .tab{padding:0.5rem 1.2rem;border-radius:9px;font-size:0.84rem;font-weight:500;cursor:pointer;border:none;background:transparent;color:var(--muted);font-family:var(--font);transition:all 0.18s;white-space:nowrap}
 .tab:hover{color:var(--text2)}
 .tab.active{background:var(--accent);color:#fff;font-weight:700;box-shadow:0 2px 8px rgba(240,165,0,0.25)}
 
-.filter-bar{display:flex;gap:0.5rem;margin-bottom:1.4rem;flex-wrap:wrap;align-items:center}
-.filter-select{background:var(--card);border:1px solid var(--border);color:var(--text2);padding:0.38rem 0.8rem;border-radius:9px;font-size:0.79rem;font-family:var(--font);cursor:pointer;outline:none;box-shadow:var(--shadow-sm)}
+/* FILTER BAR */
+.filter-bar{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:0.85rem 1.1rem;margin-bottom:1.4rem;display:flex;flex-wrap:wrap;gap:0.85rem;align-items:flex-end;box-shadow:var(--shadow-sm)}
+.filter-group{display:flex;flex-direction:column;gap:0.35rem}
+.filter-label{font-size:0.62rem;font-weight:700;text-transform:uppercase;letter-spacing:0.09em;color:var(--muted)}
+.filter-pills{display:flex;gap:0.25rem}
+.fpill{background:var(--bg);border:1px solid var(--border);color:var(--text2);padding:0.3rem 0.75rem;border-radius:20px;font-size:0.78rem;font-weight:500;cursor:pointer;font-family:var(--font);transition:all 0.15s;white-space:nowrap}
+.fpill:hover{border-color:var(--accent);color:var(--accent-dark)}
+.fpill.active{background:var(--accent-light);border-color:var(--accent);color:var(--accent-dark);font-weight:600}
+.filter-select{background:var(--bg);border:1px solid var(--border);color:var(--text2);padding:0.35rem 0.75rem;border-radius:9px;font-size:0.79rem;font-family:var(--font);cursor:pointer;outline:none}
 .filter-select:focus{border-color:var(--accent)}
-.sort-btn{background:var(--card);border:1px solid var(--border);color:var(--muted);padding:0.36rem 0.8rem;border-radius:9px;font-size:0.77rem;font-weight:500;cursor:pointer;font-family:var(--font);transition:all 0.18s;box-shadow:var(--shadow-sm)}
-.sort-btn:hover{border-color:var(--accent);color:var(--accent-dark)}
-.sort-btn.active{background:var(--accent-light);border-color:var(--accent);color:var(--accent-dark);font-weight:600}
+.filter-input{background:var(--bg);border:1px solid var(--border);color:var(--text);padding:0.35rem 0.7rem;border-radius:9px;font-size:0.8rem;font-family:var(--font);width:80px;outline:none}
+.filter-input:focus{border-color:var(--accent)}
+.filter-reset{background:none;border:1px solid var(--border-dark);color:var(--muted);padding:0.32rem 0.75rem;border-radius:9px;font-size:0.75rem;cursor:pointer;font-family:var(--font);transition:all 0.15s;align-self:flex-end}
+.filter-reset:hover{color:var(--text2);border-color:var(--text2)}
 
 .section-title{font-size:0.63rem;font-weight:700;text-transform:uppercase;letter-spacing:0.12em;color:var(--muted);margin-bottom:1.1rem;display:flex;align-items:center;gap:0.75rem}
 .section-title::after{content:'';flex:1;height:1px;background:var(--border)}
@@ -58,12 +66,11 @@ main{max-width:1100px;margin:0 auto;padding:1.75rem 1.5rem}
 /* OTA BANNER */
 .ota-banner{padding:0.32rem 1rem;font-size:0.72rem;font-weight:700;color:#fff;display:flex;align-items:center;gap:0.5rem}
 
-/* VOL CARD — layout Eurodeal Radar */
+/* VOL CARD */
 .vol-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow-sm);animation:fadeUp 0.22s ease both;transition:all 0.2s;overflow:hidden}
 .vol-card:hover{box-shadow:var(--shadow-md);border-color:var(--border-dark);transform:translateY(-1px)}
 
 .vol-card-header{padding:1rem 1.15rem 0.9rem;display:flex;align-items:center;justify-content:space-between}
-.vol-header-left{display:flex;align-items:center;gap:0.7rem}
 .airline-badge{display:inline-flex;align-items:center;justify-content:center;width:40px;height:40px;border-radius:10px;font-size:0.7rem;font-weight:800;color:#fff;flex-shrink:0}
 .vol-dest-pill{display:flex;align-items:center;gap:0.35rem;font-size:0.78rem;font-weight:500;color:var(--text2);background:var(--bg);border:1px solid var(--border);padding:0.25rem 0.65rem;border-radius:20px}
 
@@ -82,9 +89,8 @@ main{max-width:1100px;margin:0 auto;padding:1.75rem 1.5rem}
 .fstops{font-size:0.63rem;font-weight:600;padding:0.15rem 0.45rem;border-radius:10px;white-space:nowrap;color:var(--green);background:var(--green-bg)}
 .fstops.escale{color:#b45309;background:#fffbeb}
 .fdivider{height:1px;background:var(--border);margin:0.1rem 0}
-.fdur{font-size:0.67rem;color:var(--muted);text-align:center;margin-top:0.15rem}
+.fdur{font-size:0.67rem;color:var(--muted);text-align:center;margin-top:0.1rem}
 
-/* CARD FOOTER */
 .vol-card-footer{padding:0.75rem 1.15rem;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:0.5rem}
 .dates-row{display:flex;gap:0.4rem;flex-wrap:wrap}
 .date-chip{font-size:0.73rem;color:var(--text2);background:var(--bg2);border:1px solid var(--border);padding:0.22rem 0.55rem;border-radius:6px;font-weight:500}
@@ -93,7 +99,6 @@ main{max-width:1100px;margin:0 auto;padding:1.75rem 1.5rem}
 .price-sub{font-size:0.65rem;color:var(--muted);margin-top:0.1rem}
 
 .vol-notes{font-size:0.76rem;color:var(--muted);font-style:italic;background:var(--bg);border-radius:8px;padding:0.4rem 0.65rem;margin:0 1.15rem 0.75rem}
-
 .vol-card-actions{padding:0.65rem 1.15rem;border-top:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;gap:0.4rem}
 .card-btns{display:flex;gap:0.35rem}
 .delete-btn{background:none;border:1px solid var(--border);color:var(--muted);padding:0.27rem 0.6rem;border-radius:7px;font-size:0.7rem;cursor:pointer;font-family:var(--font);transition:all 0.15s}
@@ -111,19 +116,16 @@ main{max-width:1100px;margin:0 auto;padding:1.75rem 1.5rem}
 .hotel-card-header{border-bottom:1px solid var(--border);padding:0.9rem 1.1rem}
 .hotel-header-top{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:0.3rem}
 .hotel-name{font-size:0.97rem;font-weight:700;color:var(--text)}
-.hotel-stars{display:flex;gap:0.1rem;align-items:center;flex-shrink:0}
-.hotel-star{width:13px;height:13px;fill:var(--accent);flex-shrink:0}
-.hotel-star.empty{fill:var(--border-dark)}
-.hotel-header-sub{display:flex;align-items:center;gap:0.5rem}
+.hotel-header-sub{display:flex;align-items:center;gap:0.5rem;margin-top:0.2rem}
 .hotel-dest{font-size:0.73rem;color:var(--muted)}
-.hotel-note-badge{background:#003580;color:#fff;padding:0.15rem 0.42rem;border-radius:5px;font-size:0.72rem;font-weight:800;letter-spacing:0.02em}
+.hotel-note-badge{background:#003580;color:#fff;padding:0.15rem 0.42rem;border-radius:5px;font-size:0.72rem;font-weight:800}
 .hotel-card-body{padding:0.85rem 1.1rem}
 .hotel-dates{display:flex;align-items:stretch;gap:0.5rem;margin-bottom:0.6rem}
 .hotel-date-box{flex:1;background:var(--bg);border:1px solid var(--border);border-radius:9px;padding:0.5rem 0.7rem}
 .hotel-date-lbl{font-size:0.59rem;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;color:var(--muted);margin-bottom:0.15rem}
 .hotel-date-val{font-size:0.83rem;font-weight:600;color:var(--text)}
 .hotel-date-sep{display:flex;align-items:center;color:var(--muted);font-size:1rem}
-.hotel-nights-row{font-size:0.77rem;color:var(--text2);margin-bottom:0.55rem;display:flex;align-items:center;gap:0.35rem}
+.hotel-nights-row{font-size:0.77rem;color:var(--text2);margin-bottom:0.55rem}
 .hotel-notes{font-size:0.76rem;color:var(--muted);font-style:italic;background:var(--bg);border-radius:8px;padding:0.4rem 0.65rem;margin-bottom:0.6rem}
 .hotel-card-footer{padding:0.65rem 1.1rem;border-top:1px solid var(--border);display:flex;align-items:center;justify-content:space-between}
 .hotel-price{font-size:1.4rem;font-weight:800;color:var(--green);letter-spacing:-0.02em;line-height:1;cursor:pointer}
@@ -204,6 +206,7 @@ main{max-width:1100px;margin:0 auto;padding:1.75rem 1.5rem}
   .tabs{width:100%}
   .tab{flex:1;text-align:center;font-size:0.77rem;padding:0.48rem 0.3rem}
   .form-row{grid-template-columns:1fr}
+  .filter-bar{gap:0.6rem}
 }
 </style>
 </head>
@@ -226,12 +229,45 @@ main{max-width:1100px;margin:0 auto;padding:1.75rem 1.5rem}
     <button class="tab" onclick="switchTab('hotels',this)">🏨 Hôtels</button>
     <button class="tab" onclick="switchTab('voyages',this)">🗺 Voyages</button>
   </div>
+
   <div class="filter-bar">
-    <select class="filter-select" id="destFilter" onchange="renderCurrent()"><option value="all">Toutes destinations</option></select>
-    <button class="sort-btn active" onclick="setSort('prix',this)">💶 Prix</button>
-    <button class="sort-btn" onclick="setSort('date',this)">📅 Date</button>
-    <button class="sort-btn" onclick="setSort('dest',this)">🌍 Destination</button>
+    <div class="filter-group">
+      <label class="filter-label">Départ</label>
+      <div class="filter-pills" id="originPills">
+        <button class="fpill active" onclick="setOrigin('all',this)">Tous</button>
+        <button class="fpill" onclick="setOrigin('CDG',this)">CDG</button>
+        <button class="fpill" onclick="setOrigin('ORY',this)">ORY</button>
+      </div>
+    </div>
+    <div class="filter-group">
+      <label class="filter-label">Destination</label>
+      <select class="filter-select" id="destFilter" onchange="renderCurrent()">
+        <option value="all">Toutes</option>
+      </select>
+    </div>
+    <div class="filter-group">
+      <label class="filter-label">Budget max</label>
+      <div style="display:flex;align-items:center;gap:0.4rem">
+        <input class="filter-input" type="number" id="budgetFilter" placeholder="ex: 300" oninput="renderCurrent()"/>
+        <span style="font-size:0.8rem;color:var(--muted)">€</span>
+      </div>
+    </div>
+    <div class="filter-group">
+      <label class="filter-label">Compagnie</label>
+      <select class="filter-select" id="airlineFilter" onchange="renderCurrent()">
+        <option value="all">Toutes</option>
+      </select>
+    </div>
+    <div class="filter-group">
+      <label class="filter-label">Trier par</label>
+      <div class="filter-pills">
+        <button class="fpill active" id="sortPrix" onclick="setSort('prix',this)">💶 Prix</button>
+        <button class="fpill" id="sortDate" onclick="setSort('date',this)">📅 Date</button>
+      </div>
+    </div>
+    <button class="filter-reset" onclick="resetFilters()">↺ Réinitialiser</button>
   </div>
+
   <div class="section-title" id="sectionTitle">Vols sauvegardés</div>
   <div class="grid" id="mainGrid">
     <div class="state-box"><div class="icon">✈️</div><p>Aucun vol ajouté.<br>Clique sur "+ Vol" pour commencer.</p></div>
@@ -484,7 +520,7 @@ const CITIES=[
   {name:'Tallinn',iata:'TLL'},{name:'Riga',iata:'RIX'},{name:'Vilnius',iata:'VNO'},
   {name:'Helsinki',iata:'HEL'},{name:'Oslo',iata:'OSL'},{name:'Reykjavik',iata:'KEF'},
   {name:'Lyon',iata:'LYS'},{name:'Nice',iata:'NCE'},{name:'Marseille',iata:'MRS'},
-  {name:'Édimbourg',iata:'EDI'},{name:'New York',iata:'JFK'},{name:'Dubai',iata:'DXB'},
+  {name:'Edimbourg',iata:'EDI'},{name:'New York',iata:'JFK'},{name:'Dubai',iata:'DXB'},
 ];
 
 const AIRLINES=[
@@ -510,7 +546,7 @@ const AIRLINES=[
   {name:'TUI fly',iata:'TB',color:'#e4003b'},
 ];
 
-const HOTEL_CHAINS=['Ibis','Ibis Budget','Ibis Styles','Novotel','Mercure','Sofitel','Pullman','Hilton','Hilton Garden Inn','DoubleTree by Hilton','Hampton by Hilton','Marriott','Courtyard by Marriott','AC Hotels','Hyatt','Park Hyatt','InterContinental','Holiday Inn','Crowne Plaza','Best Western','Best Western Plus','Radisson','Radisson Blu','NH Hotels','NH Collection','Melia','Tryp by Wyndham','B&B Hotels','Campanile','Kyriad','Adagio','Four Seasons','Kempinski','Mandarin Oriental','Westin','Sheraton','W Hotels'];
+const HOTEL_CHAINS=['Ibis','Ibis Budget','Ibis Styles','Novotel','Mercure','Sofitel','Pullman','Hilton','Hilton Garden Inn','DoubleTree by Hilton','Hampton by Hilton','Marriott','Courtyard by Marriott','AC Hotels','Hyatt','Park Hyatt','InterContinental','Holiday Inn','Crowne Plaza','Best Western','Best Western Plus','Radisson','Radisson Blu','NH Hotels','NH Collection','Melia','B&B Hotels','Campanile','Kyriad','Adagio','Four Seasons','Kempinski','Mandarin Oriental','Westin','Sheraton','W Hotels'];
 
 const OTA_STYLES={
   'booking.com':{bg:'#003580'},'airbnb':{bg:'#ff5a5f'},
@@ -519,26 +555,26 @@ const OTA_STYLES={
   'kayak':{bg:'#ff6900'},'vrbo':{bg:'#1d51a2'},
 };
 
-const FLAGS={BCN:'🇪🇸',MAD:'🇪🇸',LIS:'🇵🇹',AMS:'🇳🇱',LHR:'🇬🇧',LGW:'🇬🇧',SVQ:'🇪🇸',VLC:'🇪🇸',AGP:'🇪🇸',ALC:'🇪🇸',PMI:'🇪🇸',IBZ:'🇪🇸',TFS:'🇪🇸',PRG:'🇨🇿',VIE:'🇦🇹',CPH:'🇩🇰',NAP:'🇮🇹',FCO:'🇮🇹',MXP:'🇮🇹',WAW:'🇵🇱',ARN:'🇸🇪',ATH:'🇬🇷',SPU:'🇭🇷',DBV:'🇭🇷',BER:'🇩🇪',MUC:'🇩🇪',HAM:'🇩🇪',FRA:'🇩🇪',ZRH:'🇨🇭',GVA:'🇨🇭',BRU:'🇧🇪',DUB:'🇮🇪',BUD:'🇭🇺',OTP:'🇷🇴',KRK:'🇵🇱',SOF:'🇧🇬',BEG:'🇷🇸',MLA:'🇲🇹',TLL:'🇪🇪',RIX:'🇱🇻',VNO:'🇱🇹',HEL:'🇫🇮',OSL:'🇳🇴',KEF:'🇮🇸',OPO:'🇵🇹',LYS:'🇫🇷',NCE:'🇫🇷',MRS:'🇫🇷',EDI:'🏴󠁧󠁢󠁳󠁣󠁴󠁿',JFK:'🇺🇸',DXB:'🇦🇪'};
+const FLAGS={BCN:'🇪🇸',MAD:'🇪🇸',LIS:'🇵🇹',AMS:'🇳🇱',LHR:'🇬🇧',LGW:'🇬🇧',SVQ:'🇪🇸',VLC:'🇪🇸',AGP:'🇪🇸',ALC:'🇪🇸',PMI:'🇪🇸',IBZ:'🇪🇸',TFS:'🇪🇸',PRG:'🇨🇿',VIE:'🇦🇹',CPH:'🇩🇰',NAP:'🇮🇹',FCO:'🇮🇹',MXP:'🇮🇹',WAW:'🇵🇱',ARN:'🇸🇪',ATH:'🇬🇷',SPU:'🇭🇷',DBV:'🇭🇷',BER:'🇩🇪',MUC:'🇩🇪',HAM:'🇩🇪',FRA:'🇩🇪',ZRH:'🇨🇭',GVA:'🇨🇭',BRU:'🇧🇪',DUB:'🇮🇪',BUD:'🇭🇺',OTP:'🇷🇴',KRK:'🇵🇱',SOF:'🇧🇬',BEG:'🇷🇸',MLA:'🇲🇹',TLL:'🇪🇪',RIX:'🇱🇻',VNO:'🇱🇹',HEL:'🇫🇮',OSL:'🇳🇴',KEF:'🇮🇸',OPO:'🇵🇹',LYS:'🇫🇷',NCE:'🇫🇷',MRS:'🇫🇷',EDI:'🇬🇧',JFK:'🇺🇸',DXB:'🇦🇪'};
 
 function getAirlineByName(name){
-  if(!name) return {iata:'?',color:'#8a8480',name:'?'};
+  if(!name)return{iata:'?',color:'#8a8480',name:'?'};
   const k=name.toLowerCase();
-  for(const a of AIRLINES){if(k.includes(a.name.toLowerCase())||a.name.toLowerCase().includes(k)) return a}
-  return {name,iata:name.slice(0,2).toUpperCase(),color:'#8a8480'};
+  for(const a of AIRLINES){if(k.includes(a.name.toLowerCase())||a.name.toLowerCase().includes(k))return a}
+  return{name,iata:name.slice(0,2).toUpperCase(),color:'#8a8480'};
 }
 function getCityIata(name){const c=CITIES.find(x=>x.name.toLowerCase()===name.toLowerCase());return c?c.iata:'';}
 function getOtaStyle(url){if(!url)return null;const u=url.toLowerCase();for(const[k,v] of Object.entries(OTA_STYLES)){if(u.includes(k))return v}return null;}
-function fmtDate(str){if(!str)return '—';return new Date(str).toLocaleDateString('fr-FR',{weekday:'short',day:'numeric',month:'short'})}
+function fmtDate(str){if(!str)return'—';return new Date(str).toLocaleDateString('fr-FR',{weekday:'short',day:'numeric',month:'short'})}
 function isStale(upd){if(!upd)return false;return(new Date()-new Date(upd))>(STALE_DAYS*86400000)}
 
 function calcDuration(dep,arr){
-  if(!dep||!arr)return '';
+  if(!dep||!arr)return'';
   const[dh,dm]=dep.split(':').map(Number);
   const[ah,am]=arr.split(':').map(Number);
   let mins=(ah*60+am)-(dh*60+dm);
   if(mins<0)mins+=1440;
-  return `${Math.floor(mins/60)}h${String(mins%60).padStart(2,'0')}`;
+  return`${Math.floor(mins/60)}h${String(mins%60).padStart(2,'0')}`;
 }
 function calcDur(leg){
   const d=leg==='aller'?'vol_hdep':'vol_rhdep';
@@ -585,7 +621,7 @@ function updateTotalPreview(){
   if(ci&&co&&prix){
     const n=Math.max(0,(new Date(co)-new Date(ci))/86400000);
     const prev=document.getElementById('nights-preview');
-    if(n>0&&prev) prev.textContent=`🌙 ${n} nuit${n>1?'s':''} · Total estimé: ${Math.round(prix*n)}€`;
+    if(n>0&&prev)prev.textContent=`🌙 ${n} nuit${n>1?'s':''} · Total estimé: ${Math.round(prix*n)}€`;
   }
 }
 function onHotelLinkInput(val){
@@ -598,10 +634,10 @@ function setStar(n){
   document.querySelectorAll('.star-sel').forEach((s,i)=>s.classList.toggle('active',i<n));
 }
 function renderStarsHTML(n){
-  if(!n||n<1)return '';
+  if(!n||n<1)return'';
   let h='';
   for(let i=1;i<=5;i++)h+=`<svg width="12" height="12" viewBox="0 0 24 24" style="flex-shrink:0"><polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26" fill="${i<=n?'#f0a500':'#d5cfc6'}"/></svg>`;
-  return `<div style="display:flex;gap:1px;align-items:center">${h}</div>`;
+  return`<div style="display:flex;gap:1px;align-items:center">${h}</div>`;
 }
 
 function populateDataLists(){
@@ -616,7 +652,7 @@ function populateDataLists(){
   HOTEL_CHAINS.forEach(h=>{if(!hl)return;const o=document.createElement('option');o.value=h;hl.appendChild(o)});
 }
 
-let currentTab='vols',currentSort='prix',editingId=null;
+let currentTab='vols',currentSort='prix',currentOrigin='all',editingId=null;
 let data={vols:[],hotels:[],voyages:[]};
 const H={apikey:SB_KEY,Authorization:`Bearer ${SB_KEY}`,'Content-Type':'application/json'};
 
@@ -634,8 +670,15 @@ function updateDestFilter(){
   const all=[...data.vols.map(v=>v.destination),...data.hotels.map(h=>h.destination)].filter(Boolean);
   const unique=[...new Set(all)].sort();
   const sel=document.getElementById('destFilter');const cur=sel.value;
-  sel.innerHTML='<option value="all">Toutes destinations</option>';
+  sel.innerHTML='<option value="all">Toutes</option>';
   unique.forEach(d=>{const o=document.createElement('option');o.value=d;o.textContent=d;if(d===cur)o.selected=true;sel.appendChild(o)});
+  const asel=document.getElementById('airlineFilter');
+  if(asel){
+    const airlines=[...new Set(data.vols.map(v=>v.compagnie).filter(Boolean))].sort();
+    const acur=asel.value;
+    asel.innerHTML='<option value="all">Toutes</option>';
+    airlines.forEach(a=>{const o=document.createElement('option');o.value=a;o.textContent=a;if(a===acur)o.selected=true;asel.appendChild(o)});
+  }
 }
 
 function populateVoyageSelects(){
@@ -653,11 +696,15 @@ function populateVoyageSelects(){
 
 function getFiltered(items,dateField){
   const dest=document.getElementById('destFilter').value;
+  const airline=document.getElementById('airlineFilter')?.value||'all';
+  const budget=parseFloat(document.getElementById('budgetFilter')?.value)||null;
   let d=[...items];
+  if(currentOrigin!=='all')d=d.filter(x=>x.origine===currentOrigin);
   if(dest!=='all')d=d.filter(x=>x.destination===dest);
+  if(airline!=='all')d=d.filter(x=>x.compagnie===airline);
+  if(budget)d=d.filter(x=>(x.prix||x.prix_nuit||0)<=budget);
   if(currentSort==='prix')d.sort((a,b)=>(a.prix||a.prix_nuit||0)-(b.prix||b.prix_nuit||0));
   else if(currentSort==='date')d.sort((a,b)=>new Date(a[dateField]||0)-new Date(b[dateField]||0));
-  else if(currentSort==='dest')d.sort((a,b)=>(a.destination||'').localeCompare(b.destination||''));
   return d;
 }
 
@@ -670,16 +717,17 @@ function renderCurrent(){
 }
 
 function staleBannerHTML(upd){
-  if(!isStale(upd))return '';
+  if(!isStale(upd))return'';
   const days=Math.floor((new Date()-new Date(upd))/86400000);
-  return `<div class="stale-banner">⚠️ Prix non vérifié depuis ${days} jours</div>`;
+  return`<div class="stale-banner">⚠️ Prix non vérifié depuis ${days} jours</div>`;
 }
 
-function flightRowHTML(label,depTime,depApt,arrTime,arrApt,dur,stops){
+function flightRowHTML(label,depTime,depApt,arrTime,arrApt,stops,dur){
   const depT=depTime||'';const arrT=arrTime||'';
-  const stopsLabel=stops==='direct'?'Direct':stops||'Direct';
-  const stopsClass=stops&&stops!=='direct'?'fstops escale':'fstops';
-  return `<div class="flight-row">
+  const isEscale=stops&&stops!=='direct';
+  const stopsLabel=isEscale?stops:'Direct';
+  const stopsClass=isEscale?'fstops escale':'fstops';
+  return`<div class="flight-row">
   <span class="flight-dir">${label}</span>
   <div class="flight-seg">
     <div><div class="ftime${depT?'':' na'}">${depT||'—'}</div><div class="fapt">${depApt||''}</div></div>
@@ -687,7 +735,7 @@ function flightRowHTML(label,depTime,depApt,arrTime,arrApt,dur,stops){
     <div style="text-align:right"><div class="ftime${arrT?'':' na'}">${arrT||'—'}</div><div class="fapt">${arrApt||''}</div></div>
   </div>
   <span class="${stopsClass}">${stopsLabel}</span>
-</div>`;
+</div>${dur?`<div class="fdur">⏱ ${dur}</div>`:''}`;
 }
 
 function renderVols(){
@@ -701,20 +749,15 @@ function renderVols(){
     const flag=FLAGS[iataD]||'🌍';
     const stopText=v.escale_ville?`Escale ${v.escale_ville}`:'direct';
     const hasReturn=v.date_retour&&v.date_retour!==v.date_aller;
-    const retRow=hasReturn?`<div class="fdivider"></div>${flightRowHTML('Ret.',v.heure_depart_retour,iataD,v.heure_arrivee_retour,iataO,v.duree_retour,stopText)}`:'';
-    const dur=v.duree_aller||v.duree_retour;
-    return `<div class="vol-card" style="animation-delay:${i*0.04}s">
+    return`<div class="vol-card" style="animation-delay:${i*0.04}s">
   ${staleBannerHTML(v.prix_updated_at)}
   <div class="vol-card-header">
-    <div class="vol-header-left">
-      <div class="airline-badge" style="background:${a.color}">${a.iata}</div>
-    </div>
+    <div class="airline-badge" style="background:${a.color}">${a.iata}</div>
     <span class="vol-dest-pill">${flag} ${v.destination||'?'}</span>
   </div>
   <div class="flight-rows">
-    ${flightRowHTML('Aller',v.heure_depart_aller,iataO,v.heure_arrivee_aller,iataD,v.duree_aller,stopText)}
-    ${retRow}
-    ${dur?`<div class="fdur">⏱ ${dur}</div>`:''}
+    ${flightRowHTML('Aller',v.heure_depart_aller,iataO,v.heure_arrivee_aller,iataD,stopText,v.duree_aller)}
+    ${hasReturn?`<div class="fdivider"></div>${flightRowHTML('Ret.',v.heure_depart_retour,iataD,v.heure_arrivee_retour,iataO,stopText,v.duree_retour)}`:''}
   </div>
   <div class="vol-card-footer">
     <div class="dates-row">
@@ -747,9 +790,9 @@ function renderHotels(){
     const nights=h.date_checkin&&h.date_checkout?Math.max(1,(new Date(h.date_checkout)-new Date(h.date_checkin))/86400000):1;
     const total=h.prix_nuit?Math.round(h.prix_nuit*nights):null;
     const ota=getOtaStyle(h.lien||'');
-    return `<div class="hotel-card" style="animation-delay:${i*0.04}s">
+    return`<div class="hotel-card" style="animation-delay:${i*0.04}s">
   ${staleBannerHTML(h.prix_updated_at)}
-  ${ota?`<div class="ota-banner" style="background:${ota.bg}">🔗 ${new URL(h.lien).hostname}</div>`:''}
+  ${ota?`<div class="ota-banner" style="background:${ota.bg}">🔗 ${(()=>{try{return new URL(h.lien).hostname}catch{return h.lien.slice(0,30)}})()} </div>`:''}
   <div class="hotel-card-header">
     <div class="hotel-header-top">
       <div>
@@ -759,7 +802,7 @@ function renderHotels(){
           ${h.note_hotel?`<span class="hotel-note-badge">${h.note_hotel}</span>`:''}
         </div>
       </div>
-      ${h.etoiles?`<div class="hotel-stars">${renderStarsHTML(h.etoiles)}</div>`:''}
+      ${h.etoiles?`<div style="display:flex;gap:1px">${renderStarsHTML(h.etoiles)}</div>`:''}
     </div>
   </div>
   <div class="hotel-card-body">
@@ -774,8 +817,8 @@ function renderHotels(){
   <div class="hotel-card-footer">
     <div onclick="toggleHotelTotal(this)" style="cursor:pointer">
       <div class="hotel-price">${h.prix_nuit?Math.round(h.prix_nuit)+'€':'—'}</div>
-      <div class="hotel-price-lbl">par nuit · 2 pers.</div>
-      ${total?`<div class="hotel-total">${total}€ total</div>`:''}
+      <div class="hotel-price-lbl">par nuit · cliquer pour total</div>
+      ${total?`<div class="hotel-total">${total}€ total (${nights} nuits)</div>`:''}
     </div>
     <div class="card-btns">
       ${!READONLY?`<button class="delete-btn" onclick="deleteItem('triporga_hotels',${h.id})">✕</button>
@@ -793,7 +836,7 @@ function toggleHotelTotal(el){
   if(!t)return;
   const shown=t.style.display==='block';
   t.style.display=shown?'none':'block';
-  l.textContent=shown?'par nuit · 2 pers.':'par nuit';
+  l.textContent=shown?'par nuit · cliquer pour total':'par nuit';
 }
 
 function renderVoyages(){
@@ -803,7 +846,7 @@ function renderVoyages(){
   grid.innerHTML=items.map((v,i)=>{
     const vol=data.vols.find(x=>String(x.id)===String(v.vol_id));
     const hotel=data.hotels.find(x=>String(x.id)===String(v.hotel_id));
-    return `<div class="voyage-card" style="animation-delay:${i*0.04}s">
+    return`<div class="voyage-card" style="animation-delay:${i*0.04}s">
   <div class="voyage-header">
     <div class="voyage-left">
       <div class="voyage-emoji">🗺</div>
@@ -825,7 +868,7 @@ function renderVoyages(){
 }
 
 function getVolBody(){
-  return {
+  return{
     origine:document.getElementById('vol_origine').value||'CDG',
     destination:document.getElementById('vol_destination').value,
     iata_destination:document.getElementById('vol_iata_dest').value||getCityIata(document.getElementById('vol_destination').value)||'',
@@ -1001,13 +1044,65 @@ function openAddModal(){
 }
 
 function closeModals(){document.querySelectorAll('.modal-overlay').forEach(m=>m.classList.remove('open'));editingId=null;}
-function switchTab(tab,el){currentTab=tab;document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));el.classList.add('active');const labels={vols:'+ Vol',hotels:'+ Hôtel',voyages:'+ Voyage'};document.getElementById('mainAddBtn').textContent=labels[tab];renderCurrent();}
-function setSort(sort,el){currentSort=sort;document.querySelectorAll('.sort-btn').forEach(b=>b.classList.remove('active'));el.classList.add('active');renderCurrent();}
-function previewLink(inputId,previewId){const val=document.getElementById(inputId).value;const preview=document.getElementById(previewId);if(val.startsWith('http')){preview.style.display='block';try{preview.textContent='🔗 '+new URL(val).hostname;}catch{preview.textContent=val.slice(0,50);}}else preview.style.display='none';}
-function shareMode(){const url=window.location.origin+window.location.pathname+'?share=1';navigator.clipboard.writeText(url).then(()=>showToast('🔗 Lien copié !'));}
-function showToast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2500);}
-document.querySelectorAll('.modal-overlay').forEach(m=>{m.addEventListener('click',e=>{if(e.target===m)closeModals()});});
+
+function switchTab(tab,el){
+  currentTab=tab;
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  el.classList.add('active');
+  const labels={vols:'+ Vol',hotels:'+ Hôtel',voyages:'+ Voyage'};
+  document.getElementById('mainAddBtn').textContent=labels[tab];
+  renderCurrent();
+}
+
+function setSort(sort,el){
+  currentSort=sort;
+  document.querySelectorAll('.filter-pills .fpill').forEach(b=>b.classList.remove('active'));
+  el.classList.add('active');
+  renderCurrent();
+}
+
+function setOrigin(o,el){
+  currentOrigin=o;
+  document.querySelectorAll('#originPills .fpill').forEach(b=>b.classList.remove('active'));
+  el.classList.add('active');
+  renderCurrent();
+}
+
+function resetFilters(){
+  currentOrigin='all';currentSort='prix';
+  document.getElementById('destFilter').value='all';
+  document.getElementById('airlineFilter').value='all';
+  document.getElementById('budgetFilter').value='';
+  document.querySelectorAll('#originPills .fpill').forEach((b,i)=>b.classList.toggle('active',i===0));
+  document.getElementById('sortPrix').classList.add('active');
+  document.getElementById('sortDate').classList.remove('active');
+  renderCurrent();
+}
+
+function previewLink(inputId,previewId){
+  const val=document.getElementById(inputId).value;
+  const preview=document.getElementById(previewId);
+  if(val.startsWith('http')){preview.style.display='block';try{preview.textContent='🔗 '+new URL(val).hostname;}catch{preview.textContent=val.slice(0,50);}}
+  else preview.style.display='none';
+}
+
+function shareMode(){
+  const url=window.location.origin+window.location.pathname+'?share=1';
+  navigator.clipboard.writeText(url).then(()=>showToast('🔗 Lien copié !'));
+}
+
+function showToast(msg){
+  const t=document.getElementById('toast');
+  t.textContent=msg;t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'),2500);
+}
+
+document.querySelectorAll('.modal-overlay').forEach(m=>{
+  m.addEventListener('click',e=>{if(e.target===m)closeModals()});
+});
+
 if(READONLY)document.getElementById('mainAddBtn').style.display='none';
+
 populateDataLists();
 loadAll();
 </script>
