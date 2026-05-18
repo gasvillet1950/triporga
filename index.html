@@ -9,15 +9,15 @@
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
---bg:#f7f5f2;--bg2:#efede9;--card:#fff;
---border:#e8e3db;--border-dark:#d5cfc6;
---text:#1a1714;--text2:#4a4540;--muted:#8a8480;
---accent:#f0a500;--accent-light:#fff8e6;--accent-dark:#c27f00;
---green:#16a34a;--green-bg:#f0fdf4;--red:#dc2626;
---shadow-sm:0 1px 4px rgba(0,0,0,0.06);
---shadow-md:0 4px 16px rgba(0,0,0,0.09);
---shadow-lg:0 12px 40px rgba(0,0,0,0.12);
---radius:14px;--font:'Inter',sans-serif;
+  --bg:#f7f5f2;--bg2:#efede9;--card:#fff;
+  --border:#e8e3db;--border-dark:#d5cfc6;
+  --text:#1a1714;--text2:#4a4540;--muted:#8a8480;
+  --accent:#f0a500;--accent-light:#fff8e6;--accent-dark:#c27f00;
+  --green:#16a34a;--green-bg:#f0fdf4;--red:#dc2626;
+  --shadow-sm:0 1px 4px rgba(0,0,0,0.06);
+  --shadow-md:0 4px 16px rgba(0,0,0,0.09);
+  --shadow-lg:0 12px 40px rgba(0,0,0,0.12);
+  --radius:14px;--font:'Inter',sans-serif;
 }
 body{background:var(--bg);color:var(--text);font-family:var(--font);min-height:100vh;-webkit-font-smoothing:antialiased}
 header{background:rgba(255,255,255,0.93);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);padding:0 2rem;height:62px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:200}
@@ -122,10 +122,14 @@ main{max-width:1100px;margin:0 auto;padding:1.75rem 1.5rem}
 .voyage-emoji{width:42px;height:42px;border-radius:10px;background:var(--accent-light);border:1px solid rgba(240,165,0,0.2);display:flex;align-items:center;justify-content:center;font-size:1.3rem;flex-shrink:0}
 .voyage-name{font-size:1rem;font-weight:700;color:var(--text)}
 .voyage-sub{font-size:0.73rem;color:var(--muted);margin-top:0.14rem}
+.voyage-budget{font-size:0.82rem;font-weight:700;color:var(--accent-dark);margin-top:0.3rem;padding:0.25rem 0.6rem;background:var(--accent-light);border-radius:7px;display:inline-block}
 .voyage-notes{font-size:0.76rem;color:var(--muted);font-style:italic;background:var(--bg);border-radius:8px;padding:0.42rem 0.7rem;margin-bottom:0.7rem}
 .voyage-linked{display:flex;flex-direction:column;gap:0.45rem;margin-bottom:0.7rem}
 .voyage-linked-item{background:var(--bg);border:1px solid var(--border);border-radius:9px;padding:0.55rem 0.85rem;font-size:0.79rem;color:var(--text2)}
 .voyage-linked-label{font-size:0.59rem;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;color:var(--muted);margin-bottom:0.18rem}
+.voyage-btns{display:flex;gap:0.4rem;flex-wrap:wrap}
+.voyage-btn{display:inline-flex;align-items:center;gap:0.3rem;background:var(--accent-light);border:1px solid rgba(240,165,0,0.3);color:var(--accent-dark);padding:0.3rem 0.7rem;border-radius:7px;font-size:0.76rem;font-weight:600;text-decoration:none;transition:all 0.15s;font-family:var(--font);cursor:pointer}
+.voyage-btn:hover{background:var(--accent);color:#fff}
 .fab{display:none;position:fixed;bottom:1.5rem;right:1.5rem;width:52px;height:52px;border-radius:50%;background:var(--accent);border:none;color:#fff;font-size:1.5rem;cursor:pointer;box-shadow:0 4px 16px rgba(240,165,0,0.4);z-index:150;align-items:center;justify-content:center;transition:all 0.2s}
 .fab:hover{background:var(--accent-dark);transform:scale(1.05)}
 @media(max-width:640px){.fab{display:flex}.add-btn{display:none}}
@@ -179,350 +183,347 @@ main{max-width:1100px;margin:0 auto;padding:1.75rem 1.5rem}
 .state-box p{font-size:0.875rem;line-height:1.7;max-width:280px;margin:0 auto}
 .toast{position:fixed;bottom:1.5rem;right:1.5rem;background:var(--text);color:#fff;padding:0.62rem 1.1rem;border-radius:10px;font-size:0.81rem;font-weight:500;z-index:400;opacity:0;transition:opacity 0.3s;pointer-events:none;box-shadow:var(--shadow-md)}
 .toast.show{opacity:1}
-/* ── SEJOUR RAPIDE (vols) ── */
-.sejour-box{background:var(--accent-light);border:1px solid rgba(240,165,0,0.35);border-radius:11px;padding:0.8rem 1rem;margin-bottom:1rem}
-.sejour-box-label{font-size:0.62rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:var(--accent-dark);margin-bottom:0.55rem;display:flex;align-items:center;gap:0.4rem}
-.sejour-row{display:flex;align-items:center;gap:0.5rem}
-.sejour-row .form-input{background:#fff;border-color:rgba(240,165,0,0.4)}
-.sejour-row .form-input:focus{border-color:var(--accent)}
-.sejour-nights{font-size:0.75rem;font-weight:700;color:var(--accent-dark);white-space:nowrap;min-width:60px}
 @keyframes fadeUp{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
 @media(max-width:640px){
-header{padding:0 1rem}main{padding:1rem}
-.grid{grid-template-columns:1fr}.tabs{width:100%}
-.tab{flex:1;text-align:center;font-size:0.77rem;padding:0.48rem 0.3rem}
-.form-row{grid-template-columns:1fr}.filter-bar{gap:0.6rem}
+  header{padding:0 1rem}main{padding:1rem}
+  .grid{grid-template-columns:1fr}.tabs{width:100%}
+  .tab{flex:1;text-align:center;font-size:0.77rem;padding:0.48rem 0.3rem}
+  .form-row{grid-template-columns:1fr}.filter-bar{gap:0.6rem}
 }
 </style>
 </head>
 <body>
 <header>
-<div class="logo"><span class="logo-icon">🧳</span><span class="logo-text">Trip<em>Orga</em></span></div>
-<div class="header-right">
-<button class="share-btn" onclick="shareMode()">🔗 Partager</button>
-<button class="add-btn" id="mainAddBtn" onclick="openAddModal()">+ Vol</button>
-</div>
+  <div class="logo"><span class="logo-icon">🧳</span><span class="logo-text">Trip<em>Orga</em></span></div>
+  <div class="header-right">
+    <button class="share-btn" onclick="shareMode()">🔗 Partager</button>
+    <button class="add-btn" id="mainAddBtn" onclick="openAddModal()">+ Vol</button>
+  </div>
 </header>
 <main>
-<div class="tabs">
-<button class="tab active" onclick="switchTab('vols',this)">✈️ Vols</button>
-<button class="tab" onclick="switchTab('hotels',this)">🏨 Hôtels</button>
-<button class="tab" onclick="switchTab('voyages',this)">🗺 Voyages</button>
-</div>
-<div class="filter-bar">
-<div class="filter-group">
-<label class="filter-label">Départ</label>
-<div class="filter-pills" id="originPills">
-<button class="fpill active" onclick="setOrigin('all',this)">Tous</button>
-<button class="fpill" onclick="setOrigin('CDG',this)">CDG</button>
-<button class="fpill" onclick="setOrigin('ORY',this)">ORY</button>
-<button class="fpill" onclick="setOrigin('BVA',this)">BVA</button>
-</div>
-</div>
-<div class="filter-group">
-<label class="filter-label">Mois</label>
-<select class="filter-select" id="monthFilter" onchange="renderCurrent()"><option value="all">Tous</option></select>
-</div>
-<div class="filter-group">
-<label class="filter-label">Destination</label>
-<select class="filter-select" id="destFilter" onchange="renderCurrent()"><option value="all">Toutes</option></select>
-</div>
-<div class="filter-group">
-<label class="filter-label">Budget max</label>
-<div style="display:flex;align-items:center;gap:0.4rem">
-<input class="filter-input" type="number" id="budgetFilter" placeholder="300" oninput="renderCurrent()"/>
-<span style="font-size:0.8rem;color:var(--muted)">€</span>
-</div>
-</div>
-<div class="filter-group">
-<label class="filter-label">Compagnie</label>
-<select class="filter-select" id="airlineFilter" onchange="renderCurrent()"><option value="all">Toutes</option></select>
-</div>
-<div class="filter-group">
-<label class="filter-label">Trier par</label>
-<div class="filter-pills">
-<button class="fpill active" id="sortPrix" onclick="setSort('prix',this)">💶 Prix</button>
-<button class="fpill" id="sortDate" onclick="setSort('date',this)">📅 Date</button>
-</div>
-</div>
-<button class="filter-reset" onclick="resetFilters()">↺ Réinitialiser</button>
-</div>
-<div class="section-title" id="sectionTitle">Vols sauvegardés</div>
-<div class="grid" id="mainGrid">
-<div class="state-box"><div class="icon">✈️</div><p>Aucun vol ajouté.<br>Clique sur "+ Vol" pour commencer.</p></div>
-</div>
+  <div class="tabs">
+    <button class="tab active" onclick="switchTab('vols',this)">✈️ Vols</button>
+    <button class="tab" onclick="switchTab('hotels',this)">🏨 Hôtels</button>
+    <button class="tab" onclick="switchTab('voyages',this)">🗺 Voyages</button>
+  </div>
+  <div class="filter-bar">
+    <div class="filter-group">
+      <label class="filter-label">Départ</label>
+      <div class="filter-pills" id="originPills">
+        <button class="fpill active" onclick="setOrigin('all',this)">Tous</button>
+        <button class="fpill" onclick="setOrigin('CDG',this)">CDG</button>
+        <button class="fpill" onclick="setOrigin('ORY',this)">ORY</button>
+        <button class="fpill" onclick="setOrigin('BVA',this)">BVA</button>
+      </div>
+    </div>
+    <div class="filter-group">
+      <label class="filter-label">Mois</label>
+      <select class="filter-select" id="monthFilter" onchange="renderCurrent()"><option value="all">Tous</option></select>
+    </div>
+    <div class="filter-group">
+      <label class="filter-label">Destination</label>
+      <select class="filter-select" id="destFilter" onchange="renderCurrent()"><option value="all">Toutes</option></select>
+    </div>
+    <div class="filter-group">
+      <label class="filter-label">Budget max</label>
+      <div style="display:flex;align-items:center;gap:0.4rem">
+        <input class="filter-input" type="number" id="budgetFilter" placeholder="300" oninput="renderCurrent()"/>
+        <span style="font-size:0.8rem;color:var(--muted)">€</span>
+      </div>
+    </div>
+    <div class="filter-group">
+      <label class="filter-label">Compagnie</label>
+      <select class="filter-select" id="airlineFilter" onchange="renderCurrent()"><option value="all">Toutes</option></select>
+    </div>
+    <div class="filter-group">
+      <label class="filter-label">Trier par</label>
+      <div class="filter-pills">
+        <button class="fpill active" id="sortPrix" onclick="setSort('prix',this)">💶 Prix</button>
+        <button class="fpill" id="sortDate" onclick="setSort('date',this)">📅 Date</button>
+      </div>
+    </div>
+    <button class="filter-reset" onclick="resetFilters()">↺ Réinitialiser</button>
+  </div>
+  <div class="section-title" id="sectionTitle">Vols sauvegardés</div>
+  <div class="grid" id="mainGrid">
+    <div class="state-box"><div class="icon">✈️</div><p>Aucun vol ajouté.<br>Clique sur "+ Vol" pour commencer.</p></div>
+  </div>
 </main>
 <button class="fab" onclick="openAddModal()">+</button>
 
 <!-- MODAL VOL -->
 <div class="modal-overlay" id="modalVol">
-<div class="modal">
-<div class="modal-header"><span class="modal-emoji">✈️</span><span class="modal-title" id="modalVolTitle">Ajouter un vol</span></div>
-
-<!-- ✅ FIX 3 : SEJOUR RAPIDE — un seul endroit pour choisir les deux dates -->
-<div class="sejour-box">
-<div class="sejour-box-label">📅 Période du séjour</div>
-<div class="sejour-row">
-<input class="form-input" id="sejour_aller" type="date" placeholder="Aller" oninput="onSejourChange()"/>
-<span class="date-range-arrow">→</span>
-<input class="form-input" id="sejour_retour" type="date" placeholder="Retour" oninput="onSejourChange()"/>
-<span class="sejour-nights" id="sejour_nights"></span>
-</div>
-</div>
-
-<div class="form-section">Trajet & Prix</div>
-<div class="form-row">
-<div class="form-group">
-<label class="form-label">Aéroport départ</label>
-<select class="form-input" id="vol_origine">
-<option value="CDG">Paris CDG</option>
-<option value="ORY">Paris ORY</option>
-<option value="BVA">Paris Beauvais (BVA)</option>
-</select>
-</div>
-<div class="form-group">
-<label class="form-label">Destination *</label>
-<input class="form-input" id="vol_destination" list="cities-list" placeholder="Tapez ou choisissez..." oninput="onDestInput(this.value)" onchange="onDestInput(this.value)" autocomplete="off"/>
-<datalist id="cities-list"></datalist>
-<input type="hidden" id="vol_iata_dest"/>
-</div>
-</div>
-<div class="form-row">
-<div class="form-group">
-<label class="form-label">Aéroport retour<span class="optional-tag">(si différent)</span></label>
-<select class="form-input" id="vol_aeroport_retour">
-<option value="">Même qu'aller</option>
-<option value="CDG">Paris CDG</option>
-<option value="ORY">Paris ORY</option>
-<option value="BVA">Paris Beauvais (BVA)</option>
-</select>
-</div>
-<div class="form-group">
-<label class="form-label">Prix A/R (€) *</label>
-<input class="form-input" id="vol_prix" type="number" placeholder="150"/>
-</div>
-</div>
-<div class="form-row">
-<div class="form-group">
-<label class="form-label">Compagnie aller</label>
-<input class="form-input" id="vol_compagnie" list="airlines-list" placeholder="Tapez ou choisissez..." oninput="onAirlineInput(this.value)" autocomplete="off"/>
-<datalist id="airlines-list"></datalist>
-<div id="airline-preview" style="display:none" class="airline-preview">
-<div class="airline-preview-badge" id="ap-badge">AF</div>
-<div><div class="airline-preview-name" id="ap-name">Air France</div><div class="airline-preview-iata" id="ap-iata">Code: AF</div></div>
-</div>
-</div>
-<div class="form-group">
-<label class="form-label">Compagnie retour<span class="optional-tag">(si différente)</span></label>
-<input class="form-input" id="vol_compagnie_retour" list="airlines-list-ret" placeholder="Même compagnie" autocomplete="off"/>
-<datalist id="airlines-list-ret"></datalist>
-</div>
-</div>
-<hr class="form-divider"/>
-<div class="form-section">Vol Aller</div>
-<div class="form-row">
-<div class="form-group">
-<label class="form-label">Date</label>
-<input class="form-input" id="vol_aller" type="date"/>
-</div>
-<div class="form-group">
-<label class="form-label">Départ → Arrivée</label>
-<div class="time-pair">
-<input class="form-input" id="vol_hdep" type="time" style="flex:1" oninput="calcDur('aller')"/>
-<span class="time-sep">→</span>
-<input class="form-input" id="vol_harr" type="time" style="flex:1" oninput="calcDur('aller')"/>
-</div>
-<div id="dur-preview-aller" class="dur-preview" style="display:none"></div>
-</div>
-</div>
-<div class="form-row">
-<div class="form-group">
-<label class="form-label">N° vol<span class="optional-tag">(optionnel)</span></label>
-<input class="form-input" id="vol_num_aller" placeholder="AF1234"/>
-</div>
-<div class="form-group">
-<label class="form-label">Durée (auto)</label>
-<input class="form-input" id="vol_dur_aller" placeholder="Auto-calculée" readonly style="color:var(--muted)"/>
-</div>
-</div>
-<hr class="form-divider"/>
-<div class="form-section">Vol Retour</div>
-<div class="form-row">
-<div class="form-group">
-<label class="form-label">Date</label>
-<input class="form-input" id="vol_retour" type="date"/>
-</div>
-<div class="form-group">
-<label class="form-label">Départ → Arrivée</label>
-<div class="time-pair">
-<input class="form-input" id="vol_rhdep" type="time" style="flex:1" oninput="calcDur('retour')"/>
-<span class="time-sep">→</span>
-<input class="form-input" id="vol_rharr" type="time" style="flex:1" oninput="calcDur('retour')"/>
-</div>
-<div id="dur-preview-retour" class="dur-preview" style="display:none"></div>
-</div>
-</div>
-<div class="form-row">
-<div class="form-group">
-<label class="form-label">N° vol<span class="optional-tag">(optionnel)</span></label>
-<input class="form-input" id="vol_num_retour" placeholder="AF1235"/>
-</div>
-<div class="form-group">
-<label class="form-label">Durée (auto)</label>
-<input class="form-input" id="vol_dur_retour" placeholder="Auto-calculée" readonly style="color:var(--muted)"/>
-</div>
-</div>
-<hr class="form-divider"/>
-<div class="toggle-row">
-<label class="toggle"><input type="checkbox" id="vol_escale_toggle" onchange="toggleEscale()"/><span class="toggle-slider"></span></label>
-<span class="toggle-label">Vol avec escale</span>
-</div>
-<div id="escale-fields" style="display:none">
-<div class="form-group">
-<label class="form-label">Ville d'escale</label>
-<input class="form-input" id="vol_escale" placeholder="ex: Istanbul"/>
-</div>
-</div>
-<hr class="form-divider"/>
-<div class="form-group">
-<label class="form-label">Lien de réservation</label>
-<input class="form-input" id="vol_lien" placeholder="https://..." oninput="previewLink('vol_lien','vol_lp')"/>
-<div class="link-preview" id="vol_lp" style="display:none"></div>
-</div>
-<div class="form-row">
-<div class="form-group">
-<label class="form-label">Rattacher à un voyage</label>
-<select class="form-input" id="vol_voyage"><option value="">— Aucun —</option></select>
-</div>
-<div class="form-group">
-<label class="form-label">Notes<span class="optional-tag">(optionnel)</span></label>
-<input class="form-input" id="vol_notes" placeholder="Bagages inclus..."/>
-</div>
-</div>
-<div class="form-actions">
-<button class="btn-cancel" onclick="closeModals()">Annuler</button>
-<button class="btn-save" onclick="saveVol()">Sauvegarder ✓</button>
-</div>
-</div>
+  <div class="modal">
+    <div class="modal-header"><span class="modal-emoji">✈️</span><span class="modal-title" id="modalVolTitle">Ajouter un vol</span></div>
+    <div class="form-section">Trajet & Prix</div>
+    <div class="form-row">
+      <div class="form-group">
+        <label class="form-label">Aéroport départ</label>
+        <select class="form-input" id="vol_origine">
+          <option value="CDG">Paris CDG</option>
+          <option value="ORY">Paris ORY</option>
+          <option value="BVA">Paris Beauvais (BVA)</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Destination *</label>
+        <input class="form-input" id="vol_destination" list="cities-list" placeholder="Tapez ou choisissez..." oninput="onDestInput(this.value)" autocomplete="off"/>
+        <datalist id="cities-list"></datalist>
+        <input type="hidden" id="vol_iata_dest"/>
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label class="form-label">Aéroport retour<span class="optional-tag">(si différent)</span></label>
+        <select class="form-input" id="vol_aeroport_retour">
+          <option value="">Même qu'aller</option>
+          <option value="CDG">Paris CDG</option>
+          <option value="ORY">Paris ORY</option>
+          <option value="BVA">Paris Beauvais (BVA)</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Prix A/R (€) *</label>
+        <input class="form-input" id="vol_prix" type="number" placeholder="150"/>
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label class="form-label">Compagnie aller</label>
+        <input class="form-input" id="vol_compagnie" list="airlines-list" placeholder="Tapez ou choisissez..." oninput="onAirlineInput(this.value)" autocomplete="off"/>
+        <datalist id="airlines-list"></datalist>
+        <div id="airline-preview" style="display:none" class="airline-preview">
+          <div class="airline-preview-badge" id="ap-badge">AF</div>
+          <div><div class="airline-preview-name" id="ap-name">Air France</div><div class="airline-preview-iata" id="ap-iata">Code: AF</div></div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Compagnie retour<span class="optional-tag">(si différente)</span></label>
+        <input class="form-input" id="vol_compagnie_retour" list="airlines-list-ret" placeholder="Même compagnie" autocomplete="off"/>
+        <datalist id="airlines-list-ret"></datalist>
+      </div>
+    </div>
+    <hr class="form-divider"/>
+    <div class="form-section">Vol Aller</div>
+    <div class="form-row">
+      <div class="form-group">
+        <label class="form-label">Date</label>
+        <input class="form-input" id="vol_aller" type="date"/>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Départ → Arrivée</label>
+        <div class="time-pair">
+          <input class="form-input" id="vol_hdep" type="time" style="flex:1" oninput="calcDur('aller')"/>
+          <span class="time-sep">→</span>
+          <input class="form-input" id="vol_harr" type="time" style="flex:1" oninput="calcDur('aller')"/>
+        </div>
+        <div id="dur-preview-aller" class="dur-preview" style="display:none"></div>
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label class="form-label">N° vol<span class="optional-tag">(optionnel)</span></label>
+        <input class="form-input" id="vol_num_aller" placeholder="AF1234"/>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Durée (auto)</label>
+        <input class="form-input" id="vol_dur_aller" placeholder="Auto-calculée" readonly style="color:var(--muted)"/>
+      </div>
+    </div>
+    <hr class="form-divider"/>
+    <div class="form-section">Vol Retour</div>
+    <div class="form-row">
+      <div class="form-group">
+        <label class="form-label">Date</label>
+        <input class="form-input" id="vol_retour" type="date"/>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Départ → Arrivée</label>
+        <div class="time-pair">
+          <input class="form-input" id="vol_rhdep" type="time" style="flex:1" oninput="calcDur('retour')"/>
+          <span class="time-sep">→</span>
+          <input class="form-input" id="vol_rharr" type="time" style="flex:1" oninput="calcDur('retour')"/>
+        </div>
+        <div id="dur-preview-retour" class="dur-preview" style="display:none"></div>
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label class="form-label">N° vol<span class="optional-tag">(optionnel)</span></label>
+        <input class="form-input" id="vol_num_retour" placeholder="AF1235"/>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Durée (auto)</label>
+        <input class="form-input" id="vol_dur_retour" placeholder="Auto-calculée" readonly style="color:var(--muted)"/>
+      </div>
+    </div>
+    <hr class="form-divider"/>
+    <div class="toggle-row">
+      <label class="toggle"><input type="checkbox" id="vol_escale_toggle" onchange="toggleEscale()"/><span class="toggle-slider"></span></label>
+      <span class="toggle-label">Vol avec escale</span>
+    </div>
+    <div id="escale-fields" style="display:none">
+      <div class="form-group">
+        <label class="form-label">Ville d'escale</label>
+        <input class="form-input" id="vol_escale" placeholder="ex: Istanbul"/>
+      </div>
+    </div>
+    <hr class="form-divider"/>
+    <div class="form-group">
+      <label class="form-label">Lien de réservation</label>
+      <input class="form-input" id="vol_lien" placeholder="https://..." oninput="previewLink('vol_lien','vol_lp')"/>
+      <div class="link-preview" id="vol_lp" style="display:none"></div>
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label class="form-label">Rattacher à un voyage</label>
+        <select class="form-input" id="vol_voyage"><option value="">— Aucun —</option></select>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Notes<span class="optional-tag">(optionnel)</span></label>
+        <input class="form-input" id="vol_notes" placeholder="Bagages inclus..."/>
+      </div>
+    </div>
+    <div class="form-actions">
+      <button class="btn-cancel" onclick="closeModals()">Annuler</button>
+      <button class="btn-save" onclick="saveVol()">Sauvegarder ✓</button>
+    </div>
+  </div>
 </div>
 
 <!-- MODAL HOTEL -->
 <div class="modal-overlay" id="modalHotel">
-<div class="modal">
-<div class="modal-header"><span class="modal-emoji">🏨</span><span class="modal-title" id="modalHotelTitle">Ajouter un hôtel</span></div>
-<div class="form-section">Infos hôtel</div>
-<div class="form-row">
-<div class="form-group">
-<label class="form-label">Ville *</label>
-<input class="form-input" id="hotel_destination" list="cities-list-h" placeholder="Tapez ou choisissez..."/>
-<datalist id="cities-list-h"></datalist>
-</div>
-<div class="form-group">
-<label class="form-label">Nom de l'hôtel</label>
-<input class="form-input" id="hotel_nom" list="hotel-chains-list" placeholder="Tapez ou choisissez..."/>
-<datalist id="hotel-chains-list"></datalist>
-</div>
-</div>
-<div class="form-group">
-<label class="form-label">Quartier / Adresse<span class="optional-tag">(optionnel)</span></label>
-<input class="form-input" id="hotel_quartier" placeholder="ex: Centre-ville, Gracia..."/>
-</div>
-<div class="form-row">
-<div class="form-group">
-<label class="form-label">Prix / nuit (€)</label>
-<input class="form-input" id="hotel_prix" type="number" placeholder="89" oninput="updateTotalPreview()"/>
-</div>
-<div class="form-group">
-<label class="form-label">Note (/10)</label>
-<input class="form-input" id="hotel_note" type="number" placeholder="8.5" step="0.1" min="0" max="10"/>
-</div>
-</div>
-<div class="form-group">
-<label class="form-label">Étoiles</label>
-<div class="star-selector">
-<svg class="star-sel" viewBox="0 0 24 24" onclick="setStar(1)"><polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26"/></svg>
-<svg class="star-sel" viewBox="0 0 24 24" onclick="setStar(2)"><polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26"/></svg>
-<svg class="star-sel" viewBox="0 0 24 24" onclick="setStar(3)"><polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26"/></svg>
-<svg class="star-sel" viewBox="0 0 24 24" onclick="setStar(4)"><polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26"/></svg>
-<svg class="star-sel" viewBox="0 0 24 24" onclick="setStar(5)"><polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26"/></svg>
-</div>
-<input type="hidden" id="hotel_etoiles" value="0"/>
-</div>
-<hr class="form-divider"/>
-<!-- ✅ FIX 3 : SEJOUR HOTEL — check-in/checkout liés, min auto -->
-<div class="form-section">Dates du séjour</div>
-<div class="form-group">
-<label class="form-label">Check-in → Check-out</label>
-<div class="date-range-wrap">
-<input class="form-input" id="hotel_checkin" type="date" oninput="onCheckinChange()"/>
-<span class="date-range-arrow">→</span>
-<input class="form-input" id="hotel_checkout" type="date" oninput="updateNightsPreview()"/>
-</div>
-<div id="nights-preview" class="nights-preview" style="display:none"></div>
-</div>
-<hr class="form-divider"/>
-<div class="form-group">
-<label class="form-label">Lien (Booking, Airbnb...)</label>
-<input class="form-input" id="hotel_lien" placeholder="https://..." oninput="onHotelLinkInput(this.value)"/>
-<div class="link-preview" id="hotel_lp" style="display:none"></div>
-</div>
-<div class="form-row">
-<div class="form-group">
-<label class="form-label">Rattacher à un voyage</label>
-<select class="form-input" id="hotel_voyage"><option value="">— Aucun —</option></select>
-</div>
-<div class="form-group">
-<label class="form-label">Notes<span class="optional-tag">(optionnel)</span></label>
-<input class="form-input" id="hotel_notes" placeholder="Petit déj inclus..."/>
-</div>
-</div>
-<div class="form-actions">
-<button class="btn-cancel" onclick="closeModals()">Annuler</button>
-<button class="btn-save" onclick="saveHotel()">Sauvegarder ✓</button>
-</div>
-</div>
+  <div class="modal">
+    <div class="modal-header"><span class="modal-emoji">🏨</span><span class="modal-title" id="modalHotelTitle">Ajouter un hôtel</span></div>
+    <div class="form-section">Infos hôtel</div>
+    <div class="form-row">
+      <div class="form-group">
+        <label class="form-label">Ville *</label>
+        <input class="form-input" id="hotel_destination" list="cities-list-h" placeholder="Tapez ou choisissez..."/>
+        <datalist id="cities-list-h"></datalist>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Nom de l'hôtel</label>
+        <input class="form-input" id="hotel_nom" list="hotel-chains-list" placeholder="Tapez ou choisissez..."/>
+        <datalist id="hotel-chains-list"></datalist>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="form-label">Quartier / Adresse<span class="optional-tag">(optionnel)</span></label>
+      <input class="form-input" id="hotel_quartier" placeholder="ex: Centre-ville, Gracia..."/>
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label class="form-label">Prix / nuit (€)</label>
+        <input class="form-input" id="hotel_prix" type="number" placeholder="89" oninput="updateTotalPreview()"/>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Note (/10)</label>
+        <input class="form-input" id="hotel_note" type="number" placeholder="8.5" step="0.1" min="0" max="10"/>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="form-label">Étoiles</label>
+      <div class="star-selector">
+        <svg class="star-sel" viewBox="0 0 24 24" onclick="setStar(1)"><polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26"/></svg>
+        <svg class="star-sel" viewBox="0 0 24 24" onclick="setStar(2)"><polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26"/></svg>
+        <svg class="star-sel" viewBox="0 0 24 24" onclick="setStar(3)"><polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26"/></svg>
+        <svg class="star-sel" viewBox="0 0 24 24" onclick="setStar(4)"><polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26"/></svg>
+        <svg class="star-sel" viewBox="0 0 24 24" onclick="setStar(5)"><polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26"/></svg>
+      </div>
+      <input type="hidden" id="hotel_etoiles" value="0"/>
+    </div>
+    <hr class="form-divider"/>
+    <div class="form-section">Dates du séjour</div>
+    <div class="form-group">
+      <label class="form-label">Check-in → Check-out</label>
+      <div class="date-range-wrap">
+        <input class="form-input" id="hotel_checkin" type="date" oninput="updateNightsPreview()"/>
+        <span class="date-range-arrow">→</span>
+        <input class="form-input" id="hotel_checkout" type="date" oninput="updateNightsPreview()"/>
+      </div>
+      <div id="nights-preview" class="nights-preview" style="display:none"></div>
+    </div>
+    <hr class="form-divider"/>
+    <div class="form-group">
+      <label class="form-label">Lien (Booking, Airbnb...)</label>
+      <input class="form-input" id="hotel_lien" placeholder="https://..." oninput="onHotelLinkInput(this.value)"/>
+      <div class="link-preview" id="hotel_lp" style="display:none"></div>
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label class="form-label">Rattacher à un voyage</label>
+        <select class="form-input" id="hotel_voyage"><option value="">— Aucun —</option></select>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Notes<span class="optional-tag">(optionnel)</span></label>
+        <input class="form-input" id="hotel_notes" placeholder="Petit déj inclus..."/>
+      </div>
+    </div>
+    <div class="form-actions">
+      <button class="btn-cancel" onclick="closeModals()">Annuler</button>
+      <button class="btn-save" onclick="saveHotel()">Sauvegarder ✓</button>
+    </div>
+  </div>
 </div>
 
 <!-- MODAL VOYAGE -->
 <div class="modal-overlay" id="modalVoyage">
-<div class="modal">
-<div class="modal-header"><span class="modal-emoji">🗺</span><span class="modal-title">Créer un voyage</span></div>
-<div class="form-group"><label class="form-label">Nom *</label><input class="form-input" id="voyage_nom" placeholder="Weekend Skiathos juillet"/></div>
-<div class="form-row">
-<div class="form-group"><label class="form-label">Destination</label><input class="form-input" id="voyage_destination" placeholder="Skiathos"/></div>
-<div class="form-group"><label class="form-label">Notes<span class="optional-tag">(optionnel)</span></label><input class="form-input" id="voyage_notes" placeholder="Idées..."/></div>
-</div>
-<div class="form-row">
-<div class="form-group"><label class="form-label">Date début</label><input class="form-input" id="voyage_debut" type="date"/></div>
-<div class="form-group"><label class="form-label">Date fin</label><input class="form-input" id="voyage_fin" type="date"/></div>
-</div>
-<hr class="form-divider"/>
-<div class="form-section">Attacher vol & hôtel</div>
-<div class="form-row">
-<div class="form-group"><label class="form-label">Vol</label><select class="form-input" id="voyage_vol"><option value="">— Aucun —</option></select></div>
-<div class="form-group"><label class="form-label">Hôtel</label><select class="form-input" id="voyage_hotel"><option value="">— Aucun —</option></select></div>
-</div>
-<div class="form-actions">
-<button class="btn-cancel" onclick="closeModals()">Annuler</button>
-<button class="btn-save" onclick="saveVoyage()">Créer ✓</button>
-</div>
-</div>
+  <div class="modal">
+    <div class="modal-header"><span class="modal-emoji">🗺</span><span class="modal-title">Créer un voyage</span></div>
+    <div class="form-group"><label class="form-label">Nom *</label><input class="form-input" id="voyage_nom" placeholder="Weekend Skiathos juillet"/></div>
+    <div class="form-row">
+      <div class="form-group"><label class="form-label">Destination</label><input class="form-input" id="voyage_destination" placeholder="Skiathos"/></div>
+      <div class="form-group"><label class="form-label">Notes<span class="optional-tag">(optionnel)</span></label><input class="form-input" id="voyage_notes" placeholder="Idées..."/></div>
+    </div>
+    <div class="form-row">
+      <div class="form-group"><label class="form-label">Date début</label><input class="form-input" id="voyage_debut" type="date"/></div>
+      <div class="form-group"><label class="form-label">Date fin</label><input class="form-input" id="voyage_fin" type="date"/></div>
+    </div>
+    <hr class="form-divider"/>
+    <div class="form-section">Attacher vol & hôtel</div>
+    <div class="form-row">
+      <div class="form-group"><label class="form-label">Vol</label><select class="form-input" id="voyage_vol"><option value="">— Aucun —</option></select></div>
+      <div class="form-group"><label class="form-label">Hôtel</label><select class="form-input" id="voyage_hotel"><option value="">— Aucun —</option></select></div>
+    </div>
+    <div class="form-actions">
+      <button class="btn-cancel" onclick="closeModals()">Annuler</button>
+      <button class="btn-save" onclick="saveVoyage()">Créer ✓</button>
+    </div>
+  </div>
 </div>
 
 <div class="toast" id="toast"></div>
+
 <script>
 const SB_URL='https://cwtohlsknsrjooogsitg.supabase.co';
 const SB_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImN3dG9obHNrbnNyam9vb2dzaXRnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzkxMDM3NDYsImV4cCI6MjA5NDY3OTc0Nn0.571xgbMdoghdQ4lsXHpgOUeb5dgXdGZy3yWdNR23diQ';
 const READONLY=new URLSearchParams(window.location.search).get('share')==='1';
 const STALE_DAYS=14;
 
-const TZ_BASE={CDG:1,ORY:1,BVA:1,BCN:1,MAD:1,SVQ:1,VLC:1,AGP:1,ALC:1,PMI:1,IBZ:1,TFS:0,LPA:0,FUE:0,ACE:0,BIO:1,EAS:1,MAH:1,SDR:1,LHR:0,LGW:0,STN:0,MAN:0,EDI:0,DUB:0,LIS:0,OPO:0,FAO:0,FNC:0,PDL:-1,AMS:1,BRU:1,EIN:1,FRA:1,BER:1,MUC:1,HAM:1,DUS:1,STR:1,CGN:1,NUE:1,ZRH:1,GVA:1,BSL:1,VIE:1,INN:1,SZG:1,FCO:1,NAP:1,MXP:1,VCE:1,PSA:1,BLQ:1,CTA:1,PMO:1,CAG:1,AHO:1,OLB:1,BRI:1,BDS:1,GOA:1,TRN:1,ATH:2,SKG:2,HER:2,RHO:2,JMK:2,CFU:2,KGS:2,JSI:2,ZTH:2,EFL:2,JTR:2,CHQ:2,MJT:2,SMI:2,PAS:2,SPU:1,DBV:1,ZAD:1,PUY:1,RJK:1,TGD:1,TIV:1,BEG:1,SJJ:1,SKP:2,TIA:1,PRG:1,BUD:1,WAW:1,KRK:1,WRO:1,GDN:1,OTP:2,CLJ:2,SOF:2,VNO:2,RIX:2,TLL:2,CPH:1,ARN:1,OSL:1,HEL:2,GOT:1,BGO:1,MLA:1,TUN:1,RAK:1,CMN:1,AGA:1,KEF:0,JFK:-5,DXB:4,LYS:1,NCE:1,MRS:1,BOD:1,NTE:1,TLS:1,MPL:1,SXB:1};
+const TZ_BASE={
+  CDG:1,ORY:1,BVA:1,
+  BCN:1,MAD:1,SVQ:1,VLC:1,AGP:1,ALC:1,PMI:1,IBZ:1,TFS:0,LPA:0,FUE:0,ACE:0,BIO:1,MAH:1,
+  LHR:0,LGW:0,STN:0,MAN:0,EDI:0,DUB:0,
+  LIS:0,OPO:0,FAO:0,FNC:0,PDL:-1,
+  AMS:1,BRU:1,EIN:1,
+  FRA:1,BER:1,MUC:1,HAM:1,DUS:1,STR:1,CGN:1,NUE:1,
+  ZRH:1,GVA:1,BSL:1,VIE:1,INN:1,SZG:1,
+  FCO:1,NAP:1,MXP:1,VCE:1,VRN:1,PSA:1,BLQ:1,CTA:1,PMO:1,CAG:1,BRI:1,AHO:1,OLB:1,BDS:1,GOA:1,TRN:1,
+  ATH:2,SKG:2,HER:2,RHO:2,JMK:2,CFU:2,KGS:2,JSI:2,ZTH:2,EFL:2,JTR:2,CHQ:2,MJT:2,SMI:2,PAS:2,
+  SPU:1,DBV:1,ZAD:1,PUY:1,RJK:1,TGD:1,TIV:1,BEG:1,SJJ:1,SKP:2,TIA:1,ZAG:1,
+  PRG:1,BUD:1,WAW:1,KRK:1,WRO:1,GDN:1,
+  OTP:2,CLJ:2,SOF:2,VNO:2,RIX:2,TLL:2,
+  CPH:1,ARN:1,OSL:1,HEL:2,GOT:1,BGO:1,
+  MLA:1,TUN:1,RAK:1,CMN:1,AGA:1,
+  KEF:0,JFK:-5,DXB:4,
+  LYS:1,NCE:1,MRS:1,BOD:1,NTE:1,TLS:1,MPL:1,SXB:1,
+};
 
 function getTzOffset(iata){
   const base=TZ_BASE[iata??'CDG']??1;
-  const m=new Date().getMonth()+1;
-  const isDST=m>=4&&m<=9;
-  const eu1=['CDG','ORY','BVA','BCN','MAD','SVQ','VLC','AGP','ALC','PMI','IBZ','BIO','EAS','MAH','SDR','AMS','BRU','EIN','FRA','BER','MUC','HAM','DUS','STR','CGN','NUE','ZRH','GVA','BSL','VIE','INN','SZG','FCO','NAP','MXP','VCE','PSA','BLQ','CTA','PMO','CAG','AHO','OLB','BRI','BDS','GOA','TRN','SPU','DBV','ZAD','PUY','RJK','TGD','TIV','BEG','SJJ','TIA','PRG','BUD','WAW','KRK','WRO','GDN','CPH','ARN','OSL','GOT','BGO','MLA','TUN','RAK','CMN','AGA','LYS','NCE','MRS','BOD','NTE','TLS','MPL','SXB'];
+  const now=new Date();const m=now.getMonth()+1;const isDST=m>=4&&m<=9;
+  const eu1=['CDG','ORY','BVA','BCN','MAD','SVQ','VLC','AGP','ALC','PMI','IBZ','BIO','MAH','AMS','BRU','EIN','FRA','BER','MUC','HAM','DUS','STR','CGN','NUE','ZRH','GVA','BSL','VIE','INN','SZG','FCO','NAP','MXP','VCE','VRN','PSA','BLQ','CTA','PMO','CAG','BRI','AHO','OLB','BDS','GOA','TRN','SPU','DBV','ZAD','PUY','RJK','TGD','TIV','BEG','SJJ','TIA','ZAG','PRG','BUD','WAW','KRK','WRO','GDN','CPH','ARN','OSL','GOT','BGO','MLA','TUN','RAK','CMN','AGA','LYS','NCE','MRS','BOD','NTE','TLS','MPL','SXB'];
   const eu2=['ATH','SKG','HER','RHO','JMK','CFU','KGS','JSI','ZTH','EFL','JTR','CHQ','MJT','SMI','PAS','SKP','OTP','CLJ','SOF','VNO','RIX','TLL','HEL'];
   if(eu1.includes(iata))return 1+(isDST?1:0);
   if(eu2.includes(iata))return 2+(isDST?1:0);
@@ -545,85 +546,136 @@ function calcDurationWithTz(dep,arr,iataFrom,iataTo){
 }
 
 const CITIES=[
-{name:'Lyon',iata:'LYS'},{name:'Nice',iata:'NCE'},{name:'Marseille',iata:'MRS'},
-{name:'Bordeaux',iata:'BOD'},{name:'Nantes',iata:'NTE'},{name:'Toulouse',iata:'TLS'},
-{name:'Montpellier',iata:'MPL'},{name:'Strasbourg',iata:'SXB'},
-{name:'Barcelone',iata:'BCN'},{name:'Madrid',iata:'MAD'},{name:'Séville',iata:'SVQ'},
-{name:'Valence',iata:'VLC'},{name:'Malaga',iata:'AGP'},{name:'Alicante',iata:'ALC'},
-{name:'Palma de Majorque',iata:'PMI'},{name:'Ibiza',iata:'IBZ'},
-{name:'Tenerife',iata:'TFS'},{name:'Gran Canaria',iata:'LPA'},{name:'Fuerteventura',iata:'FUE'},
-{name:'Lanzarote',iata:'ACE'},{name:'Bilbao',iata:'BIO'},{name:'Minorque',iata:'MAH'},
-{name:'Lisbonne',iata:'LIS'},{name:'Porto',iata:'OPO'},{name:'Faro',iata:'FAO'},
-{name:'Funchal Madère',iata:'FNC'},{name:'Ponta Delgada Açores',iata:'PDL'},
-{name:'Londres Heathrow',iata:'LHR'},{name:'Londres Gatwick',iata:'LGW'},
-{name:'Londres Stansted',iata:'STN'},{name:'Manchester',iata:'MAN'},
-{name:'Edimbourg',iata:'EDI'},{name:'Dublin',iata:'DUB'},
-{name:'Amsterdam',iata:'AMS'},{name:'Bruxelles',iata:'BRU'},{name:'Eindhoven',iata:'EIN'},
-{name:'Berlin',iata:'BER'},{name:'Munich',iata:'MUC'},{name:'Francfort',iata:'FRA'},
-{name:'Hambourg',iata:'HAM'},{name:'Düsseldorf',iata:'DUS'},{name:'Stuttgart',iata:'STR'},
-{name:'Cologne',iata:'CGN'},{name:'Nuremberg',iata:'NUE'},
-{name:'Zurich',iata:'ZRH'},{name:'Genève',iata:'GVA'},{name:'Bâle',iata:'BSL'},
-{name:'Vienne',iata:'VIE'},{name:'Innsbruck',iata:'INN'},{name:'Salzbourg',iata:'SZG'},
-{name:'Rome',iata:'FCO'},{name:'Milan',iata:'MXP'},{name:'Naples',iata:'NAP'},
-{name:'Venise',iata:'VCE'},{name:'Vérone',iata:'VRN'},{name:'Pise',iata:'PSA'},{name:'Bologne',iata:'BLQ'},
-{name:'Catane',iata:'CTA'},{name:'Palerme',iata:'PMO'},{name:'Cagliari',iata:'CAG'},
-{name:'Alghero',iata:'AHO'},{name:'Olbia',iata:'OLB'},{name:'Bari',iata:'BRI'},
-{name:'Brindisi',iata:'BDS'},{name:'Gênes',iata:'GOA'},{name:'Turin',iata:'TRN'},
-{name:'Athènes',iata:'ATH'},{name:'Thessalonique',iata:'SKG'},{name:'Héraklion',iata:'HER'},
-{name:'Rhodes',iata:'RHO'},{name:'Mykonos',iata:'JMK'},{name:'Corfou',iata:'CFU'},
-{name:'Kos',iata:'KGS'},{name:'Skiathos',iata:'JSI'},{name:'Zakynthos',iata:'ZTH'},
-{name:'Céphalonie',iata:'EFL'},{name:'Santorin',iata:'JTR'},{name:'Chania',iata:'CHQ'},
-{name:'Lesbos',iata:'MJT'},{name:'Samos',iata:'SMI'},{name:'Paros',iata:'PAS'},
-{name:'Split',iata:'SPU'},{name:'Dubrovnik',iata:'DBV'},{name:'Zadar',iata:'ZAD'},
-{name:'Pula',iata:'PUY'},{name:'Rijeka',iata:'RJK'},{name:'Podgorica',iata:'TGD'},
-{name:'Tivat',iata:'TIV'},{name:'Belgrade',iata:'BEG'},{name:'Sarajevo',iata:'SJJ'},
-{name:'Skopje',iata:'SKP'},{name:'Tirana',iata:'TIA'},{name:'Zagreb',iata:'ZAG'},
-{name:'Prague',iata:'PRG'},{name:'Budapest',iata:'BUD'},{name:'Varsovie',iata:'WAW'},
-{name:'Cracovie',iata:'KRK'},{name:'Wroclaw',iata:'WRO'},{name:'Gdansk',iata:'GDN'},
-{name:'Bucarest',iata:'OTP'},{name:'Cluj',iata:'CLJ'},{name:'Sofia',iata:'SOF'},
-{name:'Vilnius',iata:'VNO'},{name:'Riga',iata:'RIX'},{name:'Tallinn',iata:'TLL'},
-{name:'Copenhague',iata:'CPH'},{name:'Stockholm',iata:'ARN'},{name:'Oslo',iata:'OSL'},
-{name:'Helsinki',iata:'HEL'},{name:'Göteborg',iata:'GOT'},{name:'Bergen',iata:'BGO'},
-{name:'Malte',iata:'MLA'},{name:'Tunis',iata:'TUN'},{name:'Marrakech',iata:'RAK'},
-{name:'Casablanca',iata:'CMN'},{name:'Agadir',iata:'AGA'},
-{name:'Reykjavik',iata:'KEF'},{name:'New York',iata:'JFK'},{name:'Dubai',iata:'DXB'},
+  {name:'Lyon',iata:'LYS'},{name:'Nice',iata:'NCE'},{name:'Marseille',iata:'MRS'},
+  {name:'Bordeaux',iata:'BOD'},{name:'Nantes',iata:'NTE'},{name:'Toulouse',iata:'TLS'},
+  {name:'Montpellier',iata:'MPL'},{name:'Strasbourg',iata:'SXB'},
+  {name:'Barcelone',iata:'BCN'},{name:'Madrid',iata:'MAD'},{name:'Séville',iata:'SVQ'},
+  {name:'Valence',iata:'VLC'},{name:'Malaga',iata:'AGP'},{name:'Alicante',iata:'ALC'},
+  {name:'Palma de Majorque',iata:'PMI'},{name:'Ibiza',iata:'IBZ'},
+  {name:'Tenerife',iata:'TFS'},{name:'Gran Canaria',iata:'LPA'},{name:'Fuerteventura',iata:'FUE'},
+  {name:'Lanzarote',iata:'ACE'},{name:'Bilbao',iata:'BIO'},{name:'Minorque',iata:'MAH'},
+  {name:'Lisbonne',iata:'LIS'},{name:'Porto',iata:'OPO'},{name:'Faro',iata:'FAO'},
+  {name:'Funchal Madère',iata:'FNC'},{name:'Ponta Delgada Açores',iata:'PDL'},
+  {name:'Londres Heathrow',iata:'LHR'},{name:'Londres Gatwick',iata:'LGW'},
+  {name:'Londres Stansted',iata:'STN'},{name:'Manchester',iata:'MAN'},
+  {name:'Edimbourg',iata:'EDI'},{name:'Dublin',iata:'DUB'},
+  {name:'Amsterdam',iata:'AMS'},{name:'Bruxelles',iata:'BRU'},{name:'Eindhoven',iata:'EIN'},
+  {name:'Berlin',iata:'BER'},{name:'Munich',iata:'MUC'},{name:'Francfort',iata:'FRA'},
+  {name:'Hambourg',iata:'HAM'},{name:'Düsseldorf',iata:'DUS'},{name:'Stuttgart',iata:'STR'},
+  {name:'Cologne',iata:'CGN'},{name:'Nuremberg',iata:'NUE'},
+  {name:'Zurich',iata:'ZRH'},{name:'Genève',iata:'GVA'},{name:'Bâle',iata:'BSL'},
+  {name:'Vienne',iata:'VIE'},{name:'Innsbruck',iata:'INN'},{name:'Salzbourg',iata:'SZG'},
+  {name:'Rome',iata:'FCO'},{name:'Milan',iata:'MXP'},{name:'Naples',iata:'NAP'},
+  {name:'Venise',iata:'VCE'},{name:'Vérone',iata:'VRN'},{name:'Pise',iata:'PSA'},
+  {name:'Bologne',iata:'BLQ'},{name:'Catane',iata:'CTA'},{name:'Palerme',iata:'PMO'},
+  {name:'Cagliari',iata:'CAG'},{name:'Alghero',iata:'AHO'},{name:'Olbia',iata:'OLB'},
+  {name:'Bari',iata:'BRI'},{name:'Brindisi',iata:'BDS'},{name:'Gênes',iata:'GOA'},{name:'Turin',iata:'TRN'},
+  {name:'Athènes',iata:'ATH'},{name:'Thessalonique',iata:'SKG'},{name:'Héraklion',iata:'HER'},
+  {name:'Rhodes',iata:'RHO'},{name:'Mykonos',iata:'JMK'},{name:'Corfou',iata:'CFU'},
+  {name:'Kos',iata:'KGS'},{name:'Skiathos',iata:'JSI'},{name:'Zakynthos',iata:'ZTH'},
+  {name:'Céphalonie',iata:'EFL'},{name:'Santorin',iata:'JTR'},{name:'Chania',iata:'CHQ'},
+  {name:'Lesbos',iata:'MJT'},{name:'Samos',iata:'SMI'},{name:'Paros',iata:'PAS'},
+  {name:'Split',iata:'SPU'},{name:'Dubrovnik',iata:'DBV'},{name:'Zadar',iata:'ZAD'},
+  {name:'Pula',iata:'PUY'},{name:'Rijeka',iata:'RJK'},{name:'Podgorica',iata:'TGD'},
+  {name:'Tivat',iata:'TIV'},{name:'Belgrade',iata:'BEG'},{name:'Sarajevo',iata:'SJJ'},
+  {name:'Skopje',iata:'SKP'},{name:'Tirana',iata:'TIA'},{name:'Zagreb',iata:'ZAG'},
+  {name:'Prague',iata:'PRG'},{name:'Budapest',iata:'BUD'},{name:'Varsovie',iata:'WAW'},
+  {name:'Cracovie',iata:'KRK'},{name:'Wroclaw',iata:'WRO'},{name:'Gdansk',iata:'GDN'},
+  {name:'Bucarest',iata:'OTP'},{name:'Cluj',iata:'CLJ'},{name:'Sofia',iata:'SOF'},
+  {name:'Vilnius',iata:'VNO'},{name:'Riga',iata:'RIX'},{name:'Tallinn',iata:'TLL'},
+  {name:'Copenhague',iata:'CPH'},{name:'Stockholm',iata:'ARN'},{name:'Oslo',iata:'OSL'},
+  {name:'Helsinki',iata:'HEL'},{name:'Göteborg',iata:'GOT'},{name:'Bergen',iata:'BGO'},
+  {name:'Malte',iata:'MLA'},{name:'Tunis',iata:'TUN'},{name:'Marrakech',iata:'RAK'},
+  {name:'Casablanca',iata:'CMN'},{name:'Agadir',iata:'AGA'},
+  {name:'Reykjavik',iata:'KEF'},{name:'New York',iata:'JFK'},{name:'Dubai',iata:'DXB'},
 ];
 
 const AIRLINES=[
-{name:'Air France',iata:'AF',color:'#002157'},{name:'Transavia France',iata:'TO',color:'#00a650'},
-{name:'Air Corsica',iata:'XK',color:'#007a4d'},{name:'Corsair',iata:'SS',color:'#e20020'},
-{name:'French Bee',iata:'BF',color:'#0055a4'},{name:'easyJet',iata:'U2',color:'#ff6600'},
-{name:'easyJet Europe',iata:'EC',color:'#ff6600'},{name:'Ryanair',iata:'FR',color:'#073590'},
-{name:'Ryanair UK',iata:'RK',color:'#073590'},{name:'Wizz Air',iata:'W6',color:'#c6007e'},
-{name:'Wizz Air UK',iata:'W9',color:'#c6007e'},{name:'Volotea',iata:'V7',color:'#e84393'},
-{name:'Vueling',iata:'VY',color:'#d4a700'},{name:'Iberia',iata:'IB',color:'#c8102e'},
-{name:'Iberia Express',iata:'I2',color:'#c8102e'},{name:'TAP Air Portugal',iata:'TP',color:'#00843d'},
-{name:'KLM',iata:'KL',color:'#009fdb'},{name:'Transavia Netherlands',iata:'HV',color:'#00a650'},
-{name:'British Airways',iata:'BA',color:'#2b5eac'},{name:'TUI fly',iata:'TB',color:'#e4003b'},
-{name:'TUI Airways',iata:'BY',color:'#e4003b'},{name:'Jet2',iata:'LS',color:'#e8192c'},
-{name:'Lufthansa',iata:'LH',color:'#05164d'},{name:'Austrian Airlines',iata:'OS',color:'#cc0001'},
-{name:'Eurowings',iata:'EW',color:'#8b0066'},{name:'Eurowings Discover',iata:'O2',color:'#8b0066'},
-{name:'Condor',iata:'DE',color:'#ff6600'},{name:'SAS',iata:'SK',color:'#000099'},
-{name:'Norwegian',iata:'DY',color:'#d30000'},{name:'Finnair',iata:'AY',color:'#003580'},
-{name:'Widerøe',iata:'WF',color:'#005487'},{name:'LOT Polish Airlines',iata:'LO',color:'#003366'},
-{name:'Buzz',iata:'K2',color:'#ff4500'},{name:'TAROM',iata:'RO',color:'#002b7f'},
-{name:'Air Serbia',iata:'JU',color:'#c8102e'},{name:'Bulgaria Air',iata:'FB',color:'#006a4e'},
-{name:'Air Montenegro',iata:'ZM',color:'#d4af37'},{name:'Air Albania',iata:'ZB',color:'#e41e20'},
-{name:'Aegean Airlines',iata:'A3',color:'#003580'},{name:'Sky Express',iata:'GQ',color:'#0033a0'},
-{name:'Malta Air',iata:'KM',color:'#c8102e'},{name:'ITA Airways',iata:'AZ',color:'#006bb6'},
-{name:'Neos',iata:'NO',color:'#e55c00'},{name:'Blue Air',iata:'0B',color:'#003087'},
-{name:'Pegasus Airlines',iata:'PC',color:'#e3007d'},{name:'Turkish Airlines',iata:'TK',color:'#c8102e'},
-{name:'Aer Lingus',iata:'EI',color:'#007749'},{name:'Air Arabia Maroc',iata:'3O',color:'#cc0000'},
-{name:'Royal Air Maroc',iata:'AT',color:'#006233'},{name:'Tunisair',iata:'TU',color:'#c8102e'},
-{name:'Nouvelair',iata:'BJ',color:'#ff0000'},{name:'Icelandair',iata:'FI',color:'#0057a8'},
-{name:'Play',iata:'OG',color:'#7b2d8b'},{name:'SunExpress',iata:'XQ',color:'#ff6000'},
-{name:'Corendon Airlines',iata:'CAI',color:'#ff6600'},{name:'SmartWings',iata:'QS',color:'#ff6600'},
-{name:'flydubai',iata:'FZ',color:'#e01e26'},{name:'Air Arabia',iata:'G9',color:'#cc0000'},
+  {name:'Air France',iata:'AF',color:'#002157'},
+  {name:'Transavia France',iata:'TO',color:'#00a650'},
+  {name:'Air Corsica',iata:'XK',color:'#007a4d'},
+  {name:'Corsair',iata:'SS',color:'#e20020'},
+  {name:'French Bee',iata:'BF',color:'#0055a4'},
+  {name:'easyJet',iata:'U2',color:'#ff6600'},
+  {name:'easyJet Europe',iata:'EC',color:'#ff6600'},
+  {name:'Ryanair',iata:'FR',color:'#073590'},
+  {name:'Ryanair UK',iata:'RK',color:'#073590'},
+  {name:'Wizz Air',iata:'W6',color:'#c6007e'},
+  {name:'Wizz Air UK',iata:'W9',color:'#c6007e'},
+  {name:'Volotea',iata:'V7',color:'#e84393'},
+  {name:'Vueling',iata:'VY',color:'#d4a700'},
+  {name:'Iberia',iata:'IB',color:'#c8102e'},
+  {name:'Iberia Express',iata:'I2',color:'#c8102e'},
+  {name:'TAP Air Portugal',iata:'TP',color:'#00843d'},
+  {name:'KLM',iata:'KL',color:'#009fdb'},
+  {name:'Transavia Netherlands',iata:'HV',color:'#00a650'},
+  {name:'British Airways',iata:'BA',color:'#2b5eac'},
+  {name:'TUI fly',iata:'TB',color:'#e4003b'},
+  {name:'TUI Airways',iata:'BY',color:'#e4003b'},
+  {name:'Jet2',iata:'LS',color:'#e8192c'},
+  {name:'Lufthansa',iata:'LH',color:'#05164d'},
+  {name:'Austrian Airlines',iata:'OS',color:'#cc0001'},
+  {name:'Eurowings',iata:'EW',color:'#8b0066'},
+  {name:'Condor',iata:'DE',color:'#ff6600'},
+  {name:'SAS',iata:'SK',color:'#000099'},
+  {name:'Norwegian',iata:'DY',color:'#d30000'},
+  {name:'Finnair',iata:'AY',color:'#003580'},
+  {name:'Widerøe',iata:'WF',color:'#005487'},
+  {name:'LOT Polish Airlines',iata:'LO',color:'#003366'},
+  {name:'Buzz',iata:'K2',color:'#ff4500'},
+  {name:'TAROM',iata:'RO',color:'#002b7f'},
+  {name:'Air Serbia',iata:'JU',color:'#c8102e'},
+  {name:'Bulgaria Air',iata:'FB',color:'#006a4e'},
+  {name:'Air Montenegro',iata:'ZM',color:'#d4af37'},
+  {name:'Air Albania',iata:'ZB',color:'#e41e20'},
+  {name:'Aegean Airlines',iata:'A3',color:'#003580'},
+  {name:'Sky Express',iata:'GQ',color:'#0033a0'},
+  {name:'Malta Air',iata:'KM',color:'#c8102e'},
+  {name:'ITA Airways',iata:'AZ',color:'#006bb6'},
+  {name:'Neos',iata:'NO',color:'#e55c00'},
+  {name:'Blue Air',iata:'0B',color:'#003087'},
+  {name:'Pegasus Airlines',iata:'PC',color:'#e3007d'},
+  {name:'Turkish Airlines',iata:'TK',color:'#c8102e'},
+  {name:'Aer Lingus',iata:'EI',color:'#007749'},
+  {name:'Air Arabia Maroc',iata:'3O',color:'#cc0000'},
+  {name:'Royal Air Maroc',iata:'AT',color:'#006233'},
+  {name:'Tunisair',iata:'TU',color:'#c8102e'},
+  {name:'Nouvelair',iata:'BJ',color:'#ff0000'},
+  {name:'Icelandair',iata:'FI',color:'#0057a8'},
+  {name:'Play',iata:'OG',color:'#7b2d8b'},
+  {name:'SunExpress',iata:'XQ',color:'#ff6000'},
+  {name:'SmartWings',iata:'QS',color:'#ff6600'},
+  {name:'flydubai',iata:'FZ',color:'#e01e26'},
 ];
 
 const HOTEL_CHAINS=['Ibis','Ibis Budget','Ibis Styles','Novotel','Mercure','Sofitel','Pullman','Hilton','Hilton Garden Inn','DoubleTree by Hilton','Hampton by Hilton','Marriott','Courtyard by Marriott','AC Hotels','Hyatt','Park Hyatt','InterContinental','Holiday Inn','Crowne Plaza','Best Western','Best Western Plus','Radisson','Radisson Blu','NH Hotels','NH Collection','Melia','B&B Hotels','Campanile','Kyriad','Adagio','Four Seasons','Kempinski','Westin','Sheraton','W Hotels'];
-const OTA_STYLES={'booking.com':{bg:'#003580'},'airbnb':{bg:'#ff5a5f'},'expedia':{bg:'#1b3a8c'},'hotels.com':{bg:'#c8102e'},'agoda':{bg:'#5b2d8e'},'trivago':{bg:'#007aff'},'kayak':{bg:'#ff6900'},'vrbo':{bg:'#1d51a2'}};
-const FLAGS={BCN:'🇪🇸',MAD:'🇪🇸',LIS:'🇵🇹',AMS:'🇳🇱',LHR:'🇬🇧',LGW:'🇬🇧',STN:'🇬🇧',MAN:'🇬🇧',SVQ:'🇪🇸',VLC:'🇪🇸',AGP:'🇪🇸',ALC:'🇪🇸',PMI:'🇪🇸',IBZ:'🇪🇸',TFS:'🇪🇸',LPA:'🇪🇸',FUE:'🇪🇸',ACE:'🇪🇸',BIO:'🇪🇸',MAH:'🇪🇸',SDR:'🇪🇸',PRG:'🇨🇿',VIE:'🇦🇹',INN:'🇦🇹',SZG:'🇦🇹',CPH:'🇩🇰',NAP:'🇮🇹',FCO:'🇮🇹',MXP:'🇮🇹',VCE:'🇮🇹',VRN:'🇮🇹',PSA:'🇮🇹',BLQ:'🇮🇹',CTA:'🇮🇹',PMO:'🇮🇹',CAG:'🇮🇹',AHO:'🇮🇹',OLB:'🇮🇹',BRI:'🇮🇹',BDS:'🇮🇹',GOA:'🇮🇹',TRN:'🇮🇹',WAW:'🇵🇱',KRK:'🇵🇱',WRO:'🇵🇱',GDN:'🇵🇱',ARN:'🇸🇪',GOT:'🇸🇪',ATH:'🇬🇷',SKG:'🇬🇷',HER:'🇬🇷',RHO:'🇬🇷',JMK:'🇬🇷',CFU:'🇬🇷',KGS:'🇬🇷',JSI:'🇬🇷',ZTH:'🇬🇷',EFL:'🇬🇷',JTR:'🇬🇷',CHQ:'🇬🇷',MJT:'🇬🇷',SMI:'🇬🇷',PAS:'🇬🇷',SPU:'🇭🇷',DBV:'🇭🇷',ZAD:'🇭🇷',ZAG:'🇭🇷',PUY:'🇭🇷',RJK:'🇭🇷',BER:'🇩🇪',MUC:'🇩🇪',HAM:'🇩🇪',FRA:'🇩🇪',DUS:'🇩🇪',STR:'🇩🇪',CGN:'🇩🇪',NUE:'🇩🇪',ZRH:'🇨🇭',GVA:'🇨🇭',BSL:'🇨🇭',BRU:'🇧🇪',EIN:'🇳🇱',DUB:'🇮🇪',BUD:'🇭🇺',OTP:'🇷🇴',CLJ:'🇷🇴',SOF:'🇧🇬',TLL:'🇪🇪',RIX:'🇱🇻',VNO:'🇱🇹',HEL:'🇫🇮',OSL:'🇳🇴',BGO:'🇳🇴',OPO:'🇵🇹',FAO:'🇵🇹',FNC:'🇵🇹',PDL:'🇵🇹',LYS:'🇫🇷',NCE:'🇫🇷',MRS:'🇫🇷',BOD:'🇫🇷',NTE:'🇫🇷',TLS:'🇫🇷',MPL:'🇫🇷',SXB:'🇫🇷',EDI:'🇬🇧',MLA:'🇲🇹',TGD:'🇲🇪',TIV:'🇲🇪',BEG:'🇷🇸',SJJ:'🇧🇦',SKP:'🇲🇰',TIA:'🇦🇱',TUN:'🇹🇳',RAK:'🇲🇦',CMN:'🇲🇦',AGA:'🇲🇦',KEF:'🇮🇸',JFK:'🇺🇸',DXB:'🇦🇪'};
+
+const OTA_STYLES={
+  'booking.com':{bg:'#003580'},'airbnb':{bg:'#ff5a5f'},
+  'expedia':{bg:'#1b3a8c'},'hotels.com':{bg:'#c8102e'},
+  'agoda':{bg:'#5b2d8e'},'trivago':{bg:'#007aff'},
+  'kayak':{bg:'#ff6900'},'vrbo':{bg:'#1d51a2'},
+};
+
+const FLAGS={
+  BCN:'🇪🇸',MAD:'🇪🇸',LIS:'🇵🇹',AMS:'🇳🇱',LHR:'🇬🇧',LGW:'🇬🇧',STN:'🇬🇧',MAN:'🇬🇧',
+  SVQ:'🇪🇸',VLC:'🇪🇸',AGP:'🇪🇸',ALC:'🇪🇸',PMI:'🇪🇸',IBZ:'🇪🇸',TFS:'🇪🇸',LPA:'🇪🇸',
+  FUE:'🇪🇸',ACE:'🇪🇸',BIO:'🇪🇸',MAH:'🇪🇸',
+  PRG:'🇨🇿',VIE:'🇦🇹',INN:'🇦🇹',SZG:'🇦🇹',CPH:'🇩🇰',
+  NAP:'🇮🇹',FCO:'🇮🇹',MXP:'🇮🇹',VCE:'🇮🇹',VRN:'🇮🇹',PSA:'🇮🇹',BLQ:'🇮🇹',CTA:'🇮🇹',
+  PMO:'🇮🇹',CAG:'🇮🇹',AHO:'🇮🇹',OLB:'🇮🇹',BRI:'🇮🇹',BDS:'🇮🇹',GOA:'🇮🇹',TRN:'🇮🇹',
+  WAW:'🇵🇱',KRK:'🇵🇱',WRO:'🇵🇱',GDN:'🇵🇱',ARN:'🇸🇪',GOT:'🇸🇪',
+  ATH:'🇬🇷',SKG:'🇬🇷',HER:'🇬🇷',RHO:'🇬🇷',JMK:'🇬🇷',CFU:'🇬🇷',KGS:'🇬🇷',
+  JSI:'🇬🇷',ZTH:'🇬🇷',EFL:'🇬🇷',JTR:'🇬🇷',CHQ:'🇬🇷',MJT:'🇬🇷',SMI:'🇬🇷',PAS:'🇬🇷',
+  SPU:'🇭🇷',DBV:'🇭🇷',ZAD:'🇭🇷',PUY:'🇭🇷',RJK:'🇭🇷',ZAG:'🇭🇷',
+  BER:'🇩🇪',MUC:'🇩🇪',HAM:'🇩🇪',FRA:'🇩🇪',DUS:'🇩🇪',STR:'🇩🇪',CGN:'🇩🇪',NUE:'🇩🇪',
+  ZRH:'🇨🇭',GVA:'🇨🇭',BSL:'🇨🇭',BRU:'🇧🇪',EIN:'🇳🇱',DUB:'🇮🇪',BUD:'🇭🇺',
+  OTP:'🇷🇴',CLJ:'🇷🇴',SOF:'🇧🇬',TLL:'🇪🇪',RIX:'🇱🇻',VNO:'🇱🇹',HEL:'🇫🇮',
+  OSL:'🇳🇴',BGO:'🇳🇴',OPO:'🇵🇹',FAO:'🇵🇹',FNC:'🇵🇹',PDL:'🇵🇹',
+  LYS:'🇫🇷',NCE:'🇫🇷',MRS:'🇫🇷',BOD:'🇫🇷',NTE:'🇫🇷',TLS:'🇫🇷',MPL:'🇫🇷',SXB:'🇫🇷',
+  EDI:'🇬🇧',MLA:'🇲🇹',TGD:'🇲🇪',TIV:'🇲🇪',BEG:'🇷🇸',SJJ:'🇧🇦',SKP:'🇲🇰',TIA:'🇦🇱',
+  TUN:'🇹🇳',RAK:'🇲🇦',CMN:'🇲🇦',AGA:'🇲🇦',KEF:'🇮🇸',JFK:'🇺🇸',DXB:'🇦🇪',
+};
 
 function getAirlineByName(name){
   if(!name)return{iata:'?',color:'#8a8480',name:'?'};
@@ -637,48 +689,6 @@ function fmtDate(str){if(!str)return'—';return new Date(str).toLocaleDateStrin
 function fmtMonth(str){if(!str)return'';const d=new Date(str);return`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}`}
 function isStale(upd){if(!upd)return false;return(new Date()-new Date(upd))>(STALE_DAYS*86400000)}
 
-// ✅ FIX 3 — Séjour rapide vols : sync les deux champs date depuis le bloc en haut
-function onSejourChange(){
-  const a=document.getElementById('sejour_aller').value;
-  const r=document.getElementById('sejour_retour').value;
-  if(a){
-    document.getElementById('vol_aller').value=a;
-    document.getElementById('sejour_retour').min=a;
-  }
-  if(r) document.getElementById('vol_retour').value=r;
-  const nb=document.getElementById('sejour_nights');
-  if(a&&r){
-    const n=Math.max(0,(new Date(r)-new Date(a))/86400000);
-    nb.textContent=n>0?`${n}j`:'';
-  } else nb.textContent='';
-}
-function syncSejourVol(){
-  const a=document.getElementById('vol_aller').value;
-  const r=document.getElementById('vol_retour').value;
-  document.getElementById('sejour_aller').value=a||'';
-  document.getElementById('sejour_retour').value=r||'';
-  onSejourChange();
-}
-
-// ✅ FIX 3 — Hotel : quand check-in change, auto-ajuste le min du checkout
-function onCheckinChange(){
-  const ci=document.getElementById('hotel_checkin').value;
-  const co=document.getElementById('hotel_checkout');
-  if(ci){
-    co.min=ci;
-    if(co.value&&co.value<ci) co.value='';
-  }
-  updateNightsPreview();
-}
-
-// ✅ FIX 2 — calcDur robuste : dérive l'IATA depuis le texte si le champ caché est vide
-function getDestIata(){
-  const hidden=document.getElementById('vol_iata_dest')?.value||'';
-  if(hidden) return hidden;
-  const txt=document.getElementById('vol_destination')?.value||'';
-  const c=CITIES.find(x=>x.name.toLowerCase()===txt.toLowerCase());
-  return c?c.iata:'';
-}
 function calcDur(leg){
   const dId=leg==='aller'?'vol_hdep':'vol_rhdep';
   const aId=leg==='aller'?'vol_harr':'vol_rharr';
@@ -686,25 +696,19 @@ function calcDur(leg){
   const prevId=leg==='aller'?'dur-preview-aller':'dur-preview-retour';
   const dep=document.getElementById(dId).value;
   const arr=document.getElementById(aId).value;
-  const destIata=getDestIata();
-  const origIata=document.getElementById('vol_origine')?.value||'CDG';
-  const iataFrom=leg==='aller'?origIata:(destIata||'CDG');
-  const iataTo=leg==='aller'?(destIata||'CDG'):origIata;
+  const iataFrom=leg==='aller'?(document.getElementById('vol_origine')?.value||'CDG'):(document.getElementById('vol_iata_dest')?.value||'CDG');
+  const iataTo=leg==='aller'?(document.getElementById('vol_iata_dest')?.value||'CDG'):(document.getElementById('vol_aeroport_retour')?.value||document.getElementById('vol_origine')?.value||'CDG');
   const dur=calcDurationWithTz(dep,arr,iataFrom,iataTo);
   document.getElementById(durId).value=dur;
   const prev=document.getElementById(prevId);
-  if(dur){prev.style.display='inline-block';prev.textContent=`⏱ ${dur} (fuseaux pris en compte)`}
+  if(dur){prev.style.display='inline-block';prev.textContent=`⏱ ${dur}`}
   else prev.style.display='none';
 }
 
-// ✅ FIX 2 — onDestInput : met à jour le champ caché ET recalcule les durées
 function onDestInput(val){
   const c=CITIES.find(x=>x.name.toLowerCase()===val.toLowerCase());
   document.getElementById('vol_iata_dest').value=c?c.iata:'';
-  calcDur('aller');
-  calcDur('retour');
 }
-
 function onAirlineInput(val){
   const a=getAirlineByName(val);
   const prev=document.getElementById('airline-preview');
@@ -752,6 +756,7 @@ function renderStarsHTML(n){
   for(let i=1;i<=5;i++)h+=`<svg width="12" height="12" viewBox="0 0 24 24"><polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26" fill="${i<=n?'#f0a500':'#d5cfc6'}"/></svg>`;
   return`<div style="display:flex;gap:1px">${h}</div>`;
 }
+
 function populateDataLists(){
   const cl=document.getElementById('cities-list');
   const clh=document.getElementById('cities-list-h');
@@ -763,23 +768,17 @@ function populateDataLists(){
   HOTEL_CHAINS.forEach(h=>{if(!hl)return;const o=document.createElement('option');o.value=h;hl.appendChild(o)});
 }
 
-// ✅ FIX 1 — buildMonthFilter dynamique depuis les données réelles
 function buildMonthFilter(){
   const sel=document.getElementById('monthFilter');
-  const cur=sel.value;
-  const months=new Set();
-  [...data.vols.map(v=>v.date_aller),...data.hotels.map(h=>h.date_checkin)]
-    .filter(Boolean)
-    .forEach(d=>months.add(fmtMonth(d)));
-  sel.innerHTML='<option value="all">Tous</option>';
-  [...months].sort().forEach(m=>{
-    const[y,mo]=m.split('-');
-    const label=new Date(+y,+mo-1,1).toLocaleDateString('fr-FR',{month:'long',year:'numeric'});
+  const now=new Date();
+  for(let i=0;i<12;i++){
+    const d=new Date(now.getFullYear(),now.getMonth()+i,1);
+    const val=`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}`;
+    const label=d.toLocaleDateString('fr-FR',{month:'long',year:'numeric'});
     const o=document.createElement('option');
-    o.value=m;o.textContent=label.charAt(0).toUpperCase()+label.slice(1);
-    if(m===cur)o.selected=true;
+    o.value=val;o.textContent=label.charAt(0).toUpperCase()+label.slice(1);
     sel.appendChild(o);
-  });
+  }
 }
 
 let currentTab='vols',currentSort='prix',currentOrigin='all',editingId=null;
@@ -794,10 +793,7 @@ async function loadAll(){
     fetch(`${SB_URL}/rest/v1/triporga_voyages?order=created_at.desc&limit=100`,{headers:H}).then(r=>r.json()),
   ]);
   data={vols:Array.isArray(v)?v:[],hotels:Array.isArray(h)?h:[],voyages:Array.isArray(voy)?voy:[]};
-  updateDestFilter();
-  buildMonthFilter(); // ✅ FIX 1 : appelé après chargement des données
-  populateVoyageSelects();
-  renderCurrent();
+  updateDestFilter();populateVoyageSelects();renderCurrent();
 }
 
 function updateDestFilter(){
@@ -814,6 +810,7 @@ function updateDestFilter(){
     airlines.forEach(a=>{const o=document.createElement('option');o.value=a;o.textContent=a;if(a===acur)o.selected=true;asel.appendChild(o)});
   }
 }
+
 function populateVoyageSelects(){
   ['vol_voyage','hotel_voyage'].forEach(id=>{
     const sel=document.getElementById(id);if(!sel)return;
@@ -826,6 +823,7 @@ function populateVoyageSelects(){
   const sh=document.getElementById('voyage_hotel');
   if(sh){sh.innerHTML='<option value="">— Aucun —</option>';data.hotels.forEach(h=>{const o=document.createElement('option');o.value=h.id;o.textContent=`${h.nom_hotel||h.destination}${h.date_checkin?' ('+fmtDate(h.date_checkin)+')':''}${h.prix_nuit?' · '+h.prix_nuit+'€/nuit':''}`;sh.appendChild(o)})}
 }
+
 function getFiltered(items,dateField){
   const dest=document.getElementById('destFilter').value;
   const airline=document.getElementById('airlineFilter')?.value||'all';
@@ -841,6 +839,7 @@ function getFiltered(items,dateField){
   else if(currentSort==='date')d.sort((a,b)=>new Date(a[dateField]||0)-new Date(b[dateField]||0));
   return d;
 }
+
 function renderCurrent(){
   const titles={vols:'Vols sauvegardés',hotels:'Hôtels sauvegardés',voyages:'Voyages planifiés'};
   document.getElementById('sectionTitle').textContent=titles[currentTab];
@@ -848,24 +847,27 @@ function renderCurrent(){
   else if(currentTab==='hotels')renderHotels();
   else renderVoyages();
 }
+
 function staleBannerHTML(upd){
   if(!isStale(upd))return'';
   const days=Math.floor((new Date()-new Date(upd))/86400000);
   return`<div class="stale-banner">⚠️ Prix non vérifié depuis ${days} jours</div>`;
 }
+
 function flightRowHTML(label,depTime,depApt,arrTime,arrApt,stops,dur,num){
   const depT=depTime||'';const arrT=arrTime||'';
   const isEscale=stops&&stops!=='direct';
   return`<div class="flight-row">
-<span class="flight-dir">${label}</span>
-<div class="flight-seg">
-<div><div class="ftime${depT?'':' na'}">${depT||'—'}</div><div class="fapt">${depApt||''}</div></div>
-<div class="fline"><div class="fdot"></div><div class="fdash"></div><span class="fplane">✈</span><div class="fdash"></div><div class="fdot"></div></div>
-<div style="text-align:right"><div class="ftime${arrT?'':' na'}">${arrT||'—'}</div><div class="fapt">${arrApt||''}</div></div>
-</div>
-<span class="fstops${isEscale?' escale':''}">${isEscale?stops:'Direct'}</span>
+  <span class="flight-dir">${label}</span>
+  <div class="flight-seg">
+    <div><div class="ftime${depT?'':' na'}">${depT||'—'}</div><div class="fapt">${depApt||''}</div></div>
+    <div class="fline"><div class="fdot"></div><div class="fdash"></div><span class="fplane">✈</span><div class="fdash"></div><div class="fdot"></div></div>
+    <div style="text-align:right"><div class="ftime${arrT?'':' na'}">${arrT||'—'}</div><div class="fapt">${arrApt||''}</div></div>
+  </div>
+  <span class="fstops${isEscale?' escale':''}">${isEscale?stops:'Direct'}</span>
 </div>${dur?`<div class="fdur">⏱ ${dur}</div>`:''}${num?`<div class="fnum">${num}</div>`:''}`;
 }
+
 function renderVols(){
   const grid=document.getElementById('mainGrid');
   const items=getFiltered(data.vols,'date_aller');
@@ -881,222 +883,251 @@ function renderVols(){
     const aRet=v.compagnie_retour?getAirlineByName(v.compagnie_retour):null;
     const prix2=v.prix?Math.round(v.prix*2):null;
     return`<div class="vol-card" style="animation-delay:${i*0.04}s">
-${staleBannerHTML(v.prix_updated_at)}
-<div class="vol-card-header">
-<div class="airline-info-wrap">
-<div class="airline-badge" style="background:${a.color}">${a.iata}</div>
-<span class="airline-name-label" style="color:${a.color}">${a.name||v.compagnie||'?'}</span>
-${aRet&&aRet.iata!==a.iata?`<div class="airline-badge" style="background:${aRet.color};width:28px;height:28px;font-size:0.58rem;margin-left:0.2rem" title="${aRet.name}">${aRet.iata}</div>`:''}
-</div>
-<span class="vol-dest-pill">${flag} ${v.destination||'?'}</span>
-</div>
-<div class="flight-rows">
-${flightRowHTML('Aller',v.heure_depart_aller,iataO,v.heure_arrivee_aller,iataD,stopText,v.duree_aller,v.num_vol_aller)}
-${hasReturn?`<div class="fdivider"></div>${flightRowHTML('Ret.',v.heure_depart_retour,iataD,v.heure_arrivee_retour,iataRet,stopText,v.duree_retour,v.num_vol_retour)}`:''}
-</div>
-<div class="vol-card-footer">
-<div class="dates-row">
-${v.date_aller?`<span class="date-chip">🛫 ${fmtDate(v.date_aller)}</span>`:''}
-${?`<span class="date-chip">🛬 ${fmtDate(v.date_retour)}</span>`:''}
-</div>
-<div class="price-wrap" onclick="togglePriceDuo(this)">
-<div class="price-main">${v.prix?Math.round(v.prix)+'€':'—'}</div>
-<div class="price-sub">1 pers. · cliquer pour ×2</div>
-${prix2?`<div class="price-duo">👫 ${prix2}€ pour 2 personnes</div>`:''}
-</div>
-</div>
-${v.notes?`<div class="vol-notes">💬 ${v.notes}</div>`:''}
-<div class="vol-card-actions">
-<div class="card-btns">
-${!READONLY?`<button class="delete-btn" onclick="deleteItem('triporga_vols',${v.id})">✕</button>
-<button class="edit-btn" onclick="openEditVol(${v.id})">✏️ Modifier</button>
-<button class="copy-btn" onclick="copyVol(${v.id})">📋 Copier</button>`:''}
-</div>
-${v.lien?`<a class="visit-btn" href="${v.lien}" target="_blank" rel="noopener">Réserver ↗</a>`:''}
-</div>
+  ${staleBannerHTML(v.prix_updated_at)}
+  <div class="vol-card-header">
+    <div class="airline-info-wrap">
+      <div class="airline-badge" style="background:${a.color}">${a.iata}</div>
+      <span class="airline-name-label" style="color:${a.color}">${a.name||v.compagnie||'?'}</span>
+      ${aRet&&aRet.iata!==a.iata?`<div class="airline-badge" style="background:${aRet.color};width:28px;height:28px;font-size:0.58rem;margin-left:0.2rem" title="${aRet.name}">${aRet.iata}</div>`:''}
+    </div>
+    <span class="vol-dest-pill">${flag} ${v.destination||'?'}</span>
+  </div>
+  <div class="flight-rows">
+    ${flightRowHTML('Aller',v.heure_depart_aller,iataO,v.heure_arrivee_aller,iataD,stopText,v.duree_aller,v.num_vol_aller)}
+    ${hasReturn?`<div class="fdivider"></div>${flightRowHTML('Ret.',v.heure_depart_retour,iataD,v.heure_arrivee_retour,iataRet,stopText,v.duree_retour,v.num_vol_retour)}`:''}
+  </div>
+  <div class="vol-card-footer">
+    <div class="dates-row">
+      ${v.date_aller?`<span class="date-chip">🛫 ${fmtDate(v.date_aller)}</span>`:''}
+      ${hasReturn?`<span class="date-chip">🛬 ${fmtDate(v.date_retour)}</span>`:''}
+    </div>
+    <div class="price-wrap" onclick="togglePriceDuo(this)">
+      <div class="price-main">${v.prix?Math.round(v.prix)+'€':'—'}</div>
+      <div class="price-sub">1 pers. · cliquer pour ×2</div>
+      ${prix2?`<div class="price-duo">👫 ${prix2}€ pour 2</div>`:''}
+    </div>
+  </div>
+  ${v.notes?`<div class="vol-notes">💬 ${v.notes}</div>`:''}
+  <div class="vol-card-actions">
+    <div class="card-btns">
+      ${!READONLY?`<button class="delete-btn" onclick="deleteItem('triporga_vols',${v.id})">✕</button>
+      <button class="edit-btn" onclick="openEditVol(${v.id})">✏️ Modifier</button>
+      <button class="copy-btn" onclick="copyVol(${v.id})">📋 Copier</button>`:''}
+    </div>
+    ${v.lien?`<a class="visit-btn" href="${v.lien}" target="_blank" rel="noopener">Réserver ↗</a>`:''}
+  </div>
 </div>`;
   }).join('');
 }
+
 function togglePriceDuo(el){
-  const duo=el.querySelector('.price-duo');
-  const sub=el.querySelector('.price-sub');
+  const duo=el.querySelector('.price-duo');const sub=el.querySelector('.price-sub');
   if(!duo)return;
   const shown=duo.style.display==='block';
   duo.style.display=shown?'none':'block';
   sub.textContent=shown?'1 pers. · cliquer pour ×2':'1 pers.';
 }
+
 function renderHotels(){
   const grid=document.getElementById('mainGrid');
   const items=getFiltered(data.hotels,'date_checkin');
   if(!items.length){grid.innerHTML=`<div class="state-box"><div class="icon">🏨</div><p>Aucun hôtel trouvé.<br>Modifiez les filtres ou ajoutez un hôtel.</p></div>`;return;}
   grid.innerHTML=items.map((h,i)=>{
-    const nights=h.date_checkin&&h.date_checkout?Math.max(0,(new Date(h.date_checkout)-new Date(h.date_checkin))/86400000):null;
-    const total=nights&&h.prix_nuit?Math.round(nights*h.prix_nuit):null;
-    const otaStyle=getOtaStyle(h.lien);
-    let otaBanner='';
-    if(otaStyle&&h.lien){try{otaBanner=`<div class="ota-banner" style="background:${otaStyle.bg}">🔗 ${new URL(h.lien).hostname}</div>`;}catch{}}
+    const nights=h.date_checkin&&h.date_checkout?Math.max(1,(new Date(h.date_checkout)-new Date(h.date_checkin))/86400000):1;
+    const total=h.prix_nuit?Math.round(h.prix_nuit*nights):null;
+    const ota=getOtaStyle(h.lien||'');
     return`<div class="hotel-card" style="animation-delay:${i*0.04}s">
-${staleBannerHTML(h.prix_updated_at)}${otaBanner}
-<div class="hotel-card-header">
-<div class="hotel-header-top">
-<div>
-<div class="hotel-name">${h.nom_hotel||'Hôtel sans nom'}</div>
-<div class="hotel-header-sub">
-<span class="hotel-dest">📍 ${h.destination||'?'}</span>
-${h.quartier?`<span class="hotel-quartier">${h.quartier}</span>`:''}
-${renderStarsHTML(h.etoiles)}
-${h.note?`<span class="hotel-note-badge">${h.note}</span>`:''}
-</div>
-</div>
-</div>
-</div>
-<div class="hotel-card-body">
-<div class="hotel-dates">
-<div class="hotel-date-box"><div class="hotel-date-lbl">Check-in</div><div class="hotel-date-val">${fmtDate(h.date_checkin)}</div></div>
-<div class="hotel-date-sep">→</div>
-<div class="hotel-date-box"><div class="hotel-date-lbl">Check-out</div><div class="hotel-date-val">${fmtDate(h.date_checkout)}</div></div>
-</div>
-${nights?`<div class="hotel-nights-row">🌙 ${nights} nuit${nights>1?'s':''}${total?` · Total: <strong>${total}€</strong>`:''}</div>`:''}
-${h.notes?`<div class="hotel-notes">💬 ${h.notes}</div>`:''}
-</div>
-<div class="hotel-card-footer">
-<div>
-<div class="hotel-price" onclick="this.nextElementSibling.nextElementSibling.style.display=this.nextElementSibling.nextElementSibling.style.display==='block'?'none':'block'">${h.prix_nuit?h.prix_nuit+'€':'—'}</div>
-<div class="hotel-price-lbl">/ nuit · cliquer pour total</div>
-${total?`<div class="hotel-total">Total séjour: ${total}€</div>`:''}
-</div>
-<div style="display:flex;gap:0.4rem;align-items:center;flex-wrap:wrap">
-${!READONLY?`<button class="delete-btn" onclick="deleteItem('triporga_hotels',${h.id})">✕</button>
-<button class="edit-btn" onclick="openEditHotel(${h.id})">✏️ Modifier</button>`:''}
-${h.lien?`<a class="visit-btn" href="${h.lien}" target="_blank" rel="noopener">Réserver ↗</a>`:''}
-</div>
-</div>
+  ${staleBannerHTML(h.prix_updated_at)}
+  ${ota?`<div class="ota-banner" style="background:${ota.bg}">🔗 ${(()=>{try{return new URL(h.lien).hostname}catch{return''}})()} </div>`:''}
+  <div class="hotel-card-header">
+    <div class="hotel-header-top">
+      <div>
+        <div class="hotel-name">${h.nom_hotel||'Hôtel'}</div>
+        <div class="hotel-header-sub">
+          <span class="hotel-dest">${h.destination||''}</span>
+          ${h.quartier?`<span class="hotel-quartier">📍 ${h.quartier}</span>`:''}
+          ${h.note_hotel||h.note?`<span class="hotel-note-badge">${h.note_hotel||h.note}</span>`:''}
+        </div>
+      </div>
+      ${h.etoiles?`<div style="display:flex;gap:1px">${renderStarsHTML(h.etoiles)}</div>`:''}
+    </div>
+  </div>
+  <div class="hotel-card-body">
+    <div class="hotel-dates">
+      <div class="hotel-date-box"><div class="hotel-date-lbl">Check-in</div><div class="hotel-date-val">${fmtDate(h.date_checkin)}</div></div>
+      <div class="hotel-date-sep">→</div>
+      <div class="hotel-date-box"><div class="hotel-date-lbl">Check-out</div><div class="hotel-date-val">${fmtDate(h.date_checkout)}</div></div>
+    </div>
+    <div class="hotel-nights-row">🌙 ${nights} nuit${nights>1?'s':''}</div>
+    ${h.notes?`<div class="hotel-notes">💬 ${h.notes}</div>`:''}
+  </div>
+  <div class="hotel-card-footer">
+    <div onclick="toggleHotelTotal(this)" style="cursor:pointer">
+      <div class="hotel-price">${h.prix_nuit?Math.round(h.prix_nuit)+'€':'—'}</div>
+      <div class="hotel-price-lbl">par nuit · cliquer pour total</div>
+      ${total?`<div class="hotel-total">${total}€ total (${nights} nuits)</div>`:''}
+    </div>
+    <div class="card-btns">
+      ${!READONLY?`<button class="delete-btn" onclick="deleteItem('triporga_hotels',${h.id})">✕</button>
+      <button class="edit-btn" onclick="openEditHotel(${h.id})">✏️</button>`:''}
+      ${h.lien?`<a class="visit-btn" href="${h.lien}" target="_blank" rel="noopener">Voir ↗</a>`:''}
+    </div>
+  </div>
 </div>`;
   }).join('');
 }
+
+function toggleHotelTotal(el){
+  const t=el.querySelector('.hotel-total');const l=el.querySelector('.hotel-price-lbl');
+  if(!t)return;
+  const shown=t.style.display==='block';
+  t.style.display=shown?'none':'block';
+  l.textContent=shown?'par nuit · cliquer pour total':'par nuit';
+}
+
 function renderVoyages(){
   const grid=document.getElementById('mainGrid');
-  if(!data.voyages.length){grid.innerHTML=`<div class="state-box"><div class="icon">🗺</div><p>Aucun voyage planifié.<br>Créez votre premier voyage.</p></div>`;return;}
-  grid.innerHTML=data.voyages.map((v,i)=>{
-    const vol=data.vols.find(x=>x.id===v.vol_id);
-    const hotel=data.hotels.find(x=>x.id===v.hotel_id);
+  const items=[...data.voyages].sort((a,b)=>new Date(a.date_debut||0)-new Date(b.date_debut||0));
+  if(!items.length){grid.innerHTML=`<div class="state-box"><div class="icon">🗺</div><p>Aucun voyage créé.</p></div>`;return;}
+  grid.innerHTML=items.map((v,i)=>{
+    const vol=data.vols.find(x=>String(x.id)===String(v.vol_id));
+    const hotel=data.hotels.find(x=>String(x.id)===String(v.hotel_id));
+    let budget=null;
+    if(vol&&vol.prix)budget=(budget||0)+vol.prix;
+    if(hotel&&hotel.prix_nuit&&hotel.date_checkin&&hotel.date_checkout){
+      const n=Math.max(1,(new Date(hotel.date_checkout)-new Date(hotel.date_checkin))/86400000);
+      budget=(budget||0)+hotel.prix_nuit*n;
+    }
     return`<div class="voyage-card" style="animation-delay:${i*0.04}s">
-<div class="voyage-header">
-<div class="voyage-left">
-<div class="voyage-emoji">🗺</div>
-<div><div class="voyage-name">${v.nom}</div><div class="voyage-sub">${v.destination||''}${v.date_debut?' · '+fmtDate(v.date_debut):''}</div></div>
-</div>
-${!READONLY?`<div style="display:flex;gap:0.3rem">
-<button class="edit-btn" onclick="openEditVoyage(${v.id})">✏️</button>
-<button class="delete-btn" onclick="deleteItem('triporga_voyages',${v.id})">✕</button>
-</div>`:''}
-</div>
-${v.notes?`<div class="voyage-notes">💬 ${v.notes}</div>`:''}
-<div class="voyage-linked">
-${vol?`<div class="voyage-linked-item"><div class="voyage-linked-label">✈️ Vol</div>${vol.origine} → ${vol.destination}${vol.date_aller?' · '+fmtDate(vol.date_aller):''}${vol.prix?' · '+vol.prix+'€':''}</div>`:''}
-${hotel?`<div class="voyage-linked-item"><div class="voyage-linked-label">🏨 Hôtel</div>${hotel.nom_hotel||hotel.destination}${hotel.date_checkin?' · '+fmtDate(hotel.date_checkin):''}${hotel.prix_nuit?' · '+hotel.prix_nuit+'€/nuit':''}</div>`:''}
-</div>
+  <div class="voyage-header">
+    <div class="voyage-left">
+      <div class="voyage-emoji">🗺</div>
+      <div>
+        <div class="voyage-name">${v.nom||'Sans nom'}</div>
+        <div class="voyage-sub">${v.destination||''}${v.date_debut?' · '+fmtDate(v.date_debut)+' → '+fmtDate(v.date_fin):''}</div>
+        ${budget?`<div class="voyage-budget">💰 Budget estimé: ${Math.round(budget)}€</div>`:''}
+      </div>
+    </div>
+    ${!READONLY?`<button class="delete-btn" onclick="deleteItem('triporga_voyages',${v.id})">✕</button>`:''}
+  </div>
+  ${v.notes?`<div class="voyage-notes">💬 ${v.notes}</div>`:''}
+  ${vol||hotel?`<div class="voyage-linked">
+    ${vol?`<div class="voyage-linked-item"><div class="voyage-linked-label">✈️ Vol</div>${vol.origine}→${vol.destination}${vol.date_aller?' · '+fmtDate(vol.date_aller):''}${vol.prix?' · '+Math.round(vol.prix)+'€':''}</div>`:''}
+    ${hotel?`<div class="voyage-linked-item"><div class="voyage-linked-label">🏨 Hôtel</div>${hotel.nom_hotel||hotel.destination}${hotel.date_checkin?' · '+fmtDate(hotel.date_checkin):''}${hotel.prix_nuit?' · '+Math.round(hotel.prix_nuit)+'€/nuit':''}</div>`:''}
+  </div>`:'<div style="font-size:0.77rem;color:var(--muted);margin-bottom:0.7rem">Aucun vol ni hôtel attaché.</div>'}
+  <div class="voyage-btns">
+    ${vol&&vol.lien?`<a class="voyage-btn" href="${vol.lien}" target="_blank" rel="noopener">✈️ Réserver vol ↗</a>`:''}
+    ${hotel&&hotel.lien?`<a class="voyage-btn" href="${hotel.lien}" target="_blank" rel="noopener">🏨 Réserver hôtel ↗</a>`:''}
+  </div>
 </div>`;
   }).join('');
 }
-async function saveVol(){
-  const dest=document.getElementById('vol_destination').value.trim();
-  const prix=document.getElementById('vol_prix').value;
-  if(!dest||!prix){showToast('Destination et prix requis');return;}
-  const iataD=document.getElementById('vol_iata_dest').value||getCityIata(dest);
-  const obj={
-    origine:document.getElementById('vol_origine').value,
-    destination:dest,iata_destination:iataD,
-    prix:parseFloat(prix)||null,
+
+function getVolBody(){
+  return{
+    origine:document.getElementById('vol_origine').value||'CDG',
+    destination:document.getElementById('vol_destination').value,
+    iata_destination:document.getElementById('vol_iata_dest').value||getCityIata(document.getElementById('vol_destination').value)||'',
+    aeroport_retour:document.getElementById('vol_aeroport_retour').value||null,
     date_aller:document.getElementById('vol_aller').value||null,
     date_retour:document.getElementById('vol_retour').value||null,
     heure_depart_aller:document.getElementById('vol_hdep').value||null,
     heure_arrivee_aller:document.getElementById('vol_harr').value||null,
     heure_depart_retour:document.getElementById('vol_rhdep').value||null,
     heure_arrivee_retour:document.getElementById('vol_rharr').value||null,
-    duree_aller:document.getElementById('vol_dur_aller').value||null,
-    duree_retour:document.getElementById('vol_dur_retour').value||null,
-    compagnie:document.getElementById('vol_compagnie').value||null,
-    compagnie_retour:document.getElementById('vol_compagnie_retour').value||null,
     num_vol_aller:document.getElementById('vol_num_aller').value||null,
     num_vol_retour:document.getElementById('vol_num_retour').value||null,
-    aeroport_retour:document.getElementById('vol_aeroport_retour').value||null,
-    escale_ville:document.getElementById('vol_escale_toggle').checked?document.getElementById('vol_escale').value:null,
+    duree_aller:document.getElementById('vol_dur_aller').value||null,
+    duree_retour:document.getElementById('vol_dur_retour').value||null,
+    prix:parseFloat(document.getElementById('vol_prix').value)||null,
+    compagnie:document.getElementById('vol_compagnie').value||null,
+    compagnie_retour:document.getElementById('vol_compagnie_retour').value||null,
+    escale_ville:document.getElementById('vol_escale_toggle').checked?(document.getElementById('vol_escale').value||null):null,
     lien:document.getElementById('vol_lien').value||null,
     notes:document.getElementById('vol_notes').value||null,
     voyage_id:document.getElementById('vol_voyage').value||null,
     prix_updated_at:new Date().toISOString(),
   };
-  if(editingId){await fetch(`${SB_URL}/rest/v1/triporga_vols?id=eq.${editingId}`,{method:'PATCH',headers:H,body:JSON.stringify(obj)});}
-  else{await fetch(`${SB_URL}/rest/v1/triporga_vols`,{method:'POST',headers:{...H,Prefer:'return=minimal'},body:JSON.stringify(obj)});}
-  closeModals();await loadAll();showToast(editingId?'Vol modifié ✓':'Vol ajouté ✓');editingId=null;
 }
+
+async function saveVol(){
+  const body=getVolBody();
+  if(!body.destination)return showToast('⚠️ Destination obligatoire');
+  if(editingId){
+    await fetch(`${SB_URL}/rest/v1/triporga_vols?id=eq.${editingId}`,{method:'PATCH',headers:{...H,Prefer:'return=minimal'},body:JSON.stringify(body)});
+    showToast('✅ Vol mis à jour !');
+  } else {
+    await fetch(`${SB_URL}/rest/v1/triporga_vols`,{method:'POST',headers:{...H,Prefer:'return=minimal'},body:JSON.stringify(body)});
+    showToast('✅ Vol ajouté !');
+  }
+  editingId=null;closeModals();await loadAll();
+}
+
 async function saveHotel(){
-  const dest=document.getElementById('hotel_destination').value.trim();
-  if(!dest){showToast('Ville requise');return;}
-  const obj={
-    destination:dest,
+  const body={
+    destination:document.getElementById('hotel_destination').value,
     nom_hotel:document.getElementById('hotel_nom').value||null,
     quartier:document.getElementById('hotel_quartier').value||null,
-    prix_nuit:parseFloat(document.getElementById('hotel_prix').value)||null,
-    note:parseFloat(document.getElementById('hotel_note').value)||null,
-    etoiles:parseInt(document.getElementById('hotel_etoiles').value)||null,
     date_checkin:document.getElementById('hotel_checkin').value||null,
     date_checkout:document.getElementById('hotel_checkout').value||null,
+    prix_nuit:parseFloat(document.getElementById('hotel_prix').value)||null,
+    note_hotel:parseFloat(document.getElementById('hotel_note').value)||null,
+    note:parseFloat(document.getElementById('hotel_note').value)||null,
+    etoiles:parseInt(document.getElementById('hotel_etoiles').value)||null,
     lien:document.getElementById('hotel_lien').value||null,
     notes:document.getElementById('hotel_notes').value||null,
     voyage_id:document.getElementById('hotel_voyage').value||null,
     prix_updated_at:new Date().toISOString(),
   };
-  if(editingId){await fetch(`${SB_URL}/rest/v1/triporga_hotels?id=eq.${editingId}`,{method:'PATCH',headers:H,body:JSON.stringify(obj)});}
-  else{await fetch(`${SB_URL}/rest/v1/triporga_hotels`,{method:'POST',headers:{...H,Prefer:'return=minimal'},body:JSON.stringify(obj)});}
-  closeModals();await loadAll();showToast(editingId?'Hôtel modifié ✓':'Hôtel ajouté ✓');editingId=null;
+  if(!body.destination)return showToast('⚠️ Destination obligatoire');
+  if(editingId){
+    await fetch(`${SB_URL}/rest/v1/triporga_hotels?id=eq.${editingId}`,{method:'PATCH',headers:{...H,Prefer:'return=minimal'},body:JSON.stringify(body)});
+    showToast('✅ Hôtel mis à jour !');
+  } else {
+    await fetch(`${SB_URL}/rest/v1/triporga_hotels`,{method:'POST',headers:{...H,Prefer:'return=minimal'},body:JSON.stringify(body)});
+    showToast('✅ Hôtel ajouté !');
+  }
+  editingId=null;closeModals();await loadAll();
 }
+
 async function saveVoyage(){
-  const nom=document.getElementById('voyage_nom').value.trim();
-  if(!nom){showToast('Nom requis');return;}
-  const obj={
-    nom,
+  const body={
+    nom:document.getElementById('voyage_nom').value,
     destination:document.getElementById('voyage_destination').value||null,
-    notes:document.getElementById('voyage_notes').value||null,
     date_debut:document.getElementById('voyage_debut').value||null,
     date_fin:document.getElementById('voyage_fin').value||null,
+    notes:document.getElementById('voyage_notes').value||null,
     vol_id:document.getElementById('voyage_vol').value||null,
     hotel_id:document.getElementById('voyage_hotel').value||null,
   };
-  if(editingId){await fetch(`${SB_URL}/rest/v1/triporga_voyages?id=eq.${editingId}`,{method:'PATCH',headers:H,body:JSON.stringify(obj)});}
-  else{await fetch(`${SB_URL}/rest/v1/triporga_voyages`,{method:'POST',headers:{...H,Prefer:'return=minimal'},body:JSON.stringify(obj)});}
-  closeModals();await loadAll();showToast(editingId?'Voyage modifié ✓':'Voyage créé ✓');editingId=null;
+  if(!body.nom)return showToast('⚠️ Nom obligatoire');
+  await fetch(`${SB_URL}/rest/v1/triporga_voyages`,{method:'POST',headers:{...H,Prefer:'return=minimal'},body:JSON.stringify(body)});
+  closeModals();showToast('✅ Voyage créé !');await loadAll();
 }
-async function deleteItem(table,id){
-  if(pendingDelete){clearTimeout(pendingDelete.timer);pendingDelete.toast.remove();pendingDelete=null;}
-  if(table==='triporga_vols')data.vols=data.vols.filter(x=>x.id!==id);
-  else if(table==='triporga_hotels')data.hotels=data.hotels.filter(x=>x.id!==id);
-  else if(table==='triporga_voyages')data.voyages=data.voyages.filter(x=>x.id!==id);
-  renderCurrent();
-  const toast=document.createElement('div');
-  toast.className='undo-toast';
-  toast.innerHTML=`Supprimé <button class="undo-btn" onclick="undoDelete()">Annuler</button>`;
-  document.body.appendChild(toast);
-  const timer=setTimeout(async()=>{
-    await fetch(`${SB_URL}/rest/v1/${table}?id=eq.${id}`,{method:'DELETE',headers:H});
-    toast.remove();pendingDelete=null;await loadAll();
+
+function deleteItem(table,id){
+  pendingDelete={table,id};
+  const existing=document.getElementById('undoToast');if(existing)existing.remove();
+  const t=document.createElement('div');t.id='undoToast';t.className='undo-toast';
+  t.innerHTML=`Supprimé <button class="undo-btn" onclick="undoDelete()">↩ Annuler</button>`;
+  document.body.appendChild(t);
+  pendingDelete.timer=setTimeout(async()=>{
+    if(!pendingDelete)return;
+    await fetch(`${SB_URL}/rest/v1/${pendingDelete.table}?id=eq.${pendingDelete.id}`,{method:'DELETE',headers:H});
+    pendingDelete=null;t.remove();await loadAll();
   },4000);
-  pendingDelete={table,id,timer,toast};
 }
-async function undoDelete(){
+function undoDelete(){
   if(!pendingDelete)return;
-  clearTimeout(pendingDelete.timer);
-  pendingDelete.toast.remove();pendingDelete=null;
-  await loadAll();
+  clearTimeout(pendingDelete.timer);pendingDelete=null;
+  const t=document.getElementById('undoToast');if(t)t.remove();
+  showToast('↩ Suppression annulée');
 }
-function openEditVol(id){
-  const v=data.vols.find(x=>x.id===id);if(!v)return;
-  editingId=id;
-  document.getElementById('modalVolTitle').textContent='Modifier le vol';
+
+function fillVolForm(v){
   document.getElementById('vol_origine').value=v.origine||'CDG';
   document.getElementById('vol_destination').value=v.destination||'';
-  document.getElementById('vol_iata_dest').value=v.iata_destination||getCityIata(v.destination||'')||'';
+  document.getElementById('vol_iata_dest').value=v.iata_destination||'';
   document.getElementById('vol_aeroport_retour').value=v.aeroport_retour||'';
   document.getElementById('vol_prix').value=v.prix||'';
   document.getElementById('vol_compagnie').value=v.compagnie||'';
@@ -1107,179 +1138,120 @@ function openEditVol(id){
   document.getElementById('vol_harr').value=v.heure_arrivee_aller||'';
   document.getElementById('vol_rhdep').value=v.heure_depart_retour||'';
   document.getElementById('vol_rharr').value=v.heure_arrivee_retour||'';
-  document.getElementById('vol_dur_aller').value=v.duree_aller||'';
-  document.getElementById('vol_dur_retour').value=v.duree_retour||'';
   document.getElementById('vol_num_aller').value=v.num_vol_aller||'';
   document.getElementById('vol_num_retour').value=v.num_vol_retour||'';
-  document.getElementById('vol_escale_toggle').checked=!!v.escale_ville;
-  document.getElementById('escale-fields').style.display=v.escale_ville?'block':'none';
-  document.getElementById('vol_escale').value=v.escale_ville||'';
+  document.getElementById('vol_dur_aller').value=v.duree_aller||'';
+  document.getElementById('vol_dur_retour').value=v.duree_retour||'';
   document.getElementById('vol_lien').value=v.lien||'';
   document.getElementById('vol_notes').value=v.notes||'';
   document.getElementById('vol_voyage').value=v.voyage_id||'';
+  const hasEscale=!!v.escale_ville;
+  document.getElementById('vol_escale_toggle').checked=hasEscale;
+  document.getElementById('escale-fields').style.display=hasEscale?'block':'none';
+  document.getElementById('vol_escale').value=v.escale_ville||'';
   if(v.compagnie)onAirlineInput(v.compagnie);
-  previewLink('vol_lien','vol_lp');
-  syncSejourVol();
+}
+
+function openEditVol(id){
+  const v=data.vols.find(x=>x.id===id);if(!v)return;
+  editingId=id;document.getElementById('modalVolTitle').textContent='Modifier le vol';
+  fillVolForm(v);document.getElementById('modalVol').classList.add('open');
+}
+function copyVol(id){
+  const v=data.vols.find(x=>x.id===id);if(!v)return;
+  editingId=null;document.getElementById('modalVolTitle').textContent='Copier ce vol';
+  fillVolForm(v);
+  document.getElementById('vol_aller').value='';document.getElementById('vol_retour').value='';
   document.getElementById('modalVol').classList.add('open');
 }
 function openEditHotel(id){
   const h=data.hotels.find(x=>x.id===id);if(!h)return;
-  editingId=id;
-  document.getElementById('modalHotelTitle').textContent="Modifier l'hôtel";
+  editingId=id;document.getElementById('modalHotelTitle').textContent="Modifier l'hôtel";
   document.getElementById('hotel_destination').value=h.destination||'';
   document.getElementById('hotel_nom').value=h.nom_hotel||'';
   document.getElementById('hotel_quartier').value=h.quartier||'';
   document.getElementById('hotel_prix').value=h.prix_nuit||'';
-  document.getElementById('hotel_note').value=h.note||'';
-  setStar(h.etoiles||0);
+  document.getElementById('hotel_note').value=h.note_hotel||h.note||'';
   document.getElementById('hotel_checkin').value=h.date_checkin||'';
   document.getElementById('hotel_checkout').value=h.date_checkout||'';
-  if(h.date_checkin) document.getElementById('hotel_checkout').min=h.date_checkin;
   document.getElementById('hotel_lien').value=h.lien||'';
   document.getElementById('hotel_notes').value=h.notes||'';
   document.getElementById('hotel_voyage').value=h.voyage_id||'';
-  onHotelLinkInput(h.lien||'');
-  updateNightsPreview();
+  setStar(h.etoiles||0);onHotelLinkInput(h.lien||'');updateNightsPreview();
   document.getElementById('modalHotel').classList.add('open');
 }
-function openEditVoyage(id){
-  const v=data.voyages.find(x=>x.id===id);if(!v)return;
-  editingId=id;
-  populateVoyageSelects();
-  document.getElementById('voyage_nom').value=v.nom||'';
-  document.getElementById('voyage_destination').value=v.destination||'';
-  document.getElementById('voyage_notes').value=v.notes||'';
-  document.getElementById('voyage_debut').value=v.date_debut||'';
-  document.getElementById('voyage_fin').value=v.date_fin||'';
-  document.getElementById('voyage_vol').value=v.vol_id||'';
-  document.getElementById('voyage_hotel').value=v.hotel_id||'';
-  document.getElementById('modalVoyage').classList.add('open');
-}
-function copyVol(id){
-  const v=data.vols.find(x=>x.id===id);if(!v)return;
-  editingId=null;
-  document.getElementById('modalVolTitle').textContent='Copier le vol';
-  document.getElementById('vol_origine').value=v.origine||'CDG';
-  document.getElementById('vol_destination').value=v.destination||'';
-  document.getElementById('vol_iata_dest').value=v.iata_destination||getCityIata(v.destination||'')||'';
-  document.getElementById('vol_aeroport_retour').value=v.aeroport_retour||'';
-  document.getElementById('vol_prix').value=v.prix||'';
-  document.getElementById('vol_compagnie').value=v.compagnie||'';
-  document.getElementById('vol_compagnie_retour').value=v.compagnie_retour||'';
-  document.getElementById('vol_aller').value='';
-  document.getElementById('vol_retour').value='';
-  document.getElementById('vol_hdep').value=v.heure_depart_aller||'';
-  document.getElementById('vol_harr').value=v.heure_arrivee_aller||'';
-  document.getElementById('vol_rhdep').value=v.heure_depart_retour||'';
-  document.getElementById('vol_rharr').value=v.heure_arrivee_retour||'';
-  document.getElementById('vol_dur_aller').value=v.duree_aller||'';
-  document.getElementById('vol_dur_retour').value=v.duree_retour||'';
-  document.getElementById('vol_num_aller').value='';
-  document.getElementById('vol_num_retour').value='';
-  document.getElementById('vol_escale_toggle').checked=!!v.escale_ville;
-  document.getElementById('escale-fields').style.display=v.escale_ville?'block':'none';
-  document.getElementById('vol_escale').value=v.escale_ville||'';
-  document.getElementById('vol_lien').value='';
-  document.getElementById('vol_notes').value=v.notes||'';
-  document.getElementById('vol_voyage').value='';
-  document.getElementById('sejour_aller').value='';
-  document.getElementById('sejour_retour').value='';
-  document.getElementById('sejour_nights').textContent='';
-  if(v.compagnie)onAirlineInput(v.compagnie);
-  document.getElementById('modalVol').classList.add('open');
-}
-function closeModals(){
-  document.querySelectorAll('.modal-overlay').forEach(m=>m.classList.remove('open'));
-  editingId=null;
-  document.getElementById('airline-preview').style.display='none';
-  document.getElementById('vol_escale_toggle').checked=false;
-  document.getElementById('escale-fields').style.display='none';
-  document.getElementById('vol_lp').style.display='none';
-  document.getElementById('hotel_lp').style.display='none';
-  document.getElementById('dur-preview-aller').style.display='none';
-  document.getElementById('dur-preview-retour').style.display='none';
-  document.getElementById('nights-preview').style.display='none';
-  document.getElementById('sejour_aller').value='';
-  document.getElementById('sejour_retour').value='';
-  document.getElementById('sejour_nights').textContent='';
-}
+
 function openAddModal(){
-  editingId=null;
-  document.getElementById('modalVolTitle').textContent='Ajouter un vol';
-  document.getElementById('modalHotelTitle').textContent='Ajouter un hôtel';
-  ['vol_destination','vol_prix','vol_compagnie','vol_compagnie_retour','vol_aller','vol_retour','vol_hdep','vol_harr','vol_rhdep','vol_rharr','vol_dur_aller','vol_dur_retour','vol_num_aller','vol_num_retour','vol_escale','vol_lien','vol_notes'].forEach(id=>{const el=document.getElementById(id);if(el)el.value='';});
-  document.getElementById('vol_iata_dest').value='';
-  document.getElementById('vol_aeroport_retour').value='';
-  document.getElementById('vol_origine').value='CDG';
-  document.getElementById('sejour_aller').value='';
-  document.getElementById('sejour_retour').value='';
-  document.getElementById('sejour_nights').textContent='';
-  ['hotel_destination','hotel_nom','hotel_quartier','hotel_prix','hotel_note','hotel_checkin','hotel_checkout','hotel_lien','hotel_notes'].forEach(id=>{const el=document.getElementById(id);if(el)el.value='';});
-  setStar(0);document.getElementById('hotel_etoiles').value='0';
-  populateVoyageSelects();
-  if(currentTab==='hotels'){document.getElementById('modalHotel').classList.add('open');}
-  else if(currentTab==='voyages'){
-    ['voyage_nom','voyage_destination','voyage_notes','voyage_debut','voyage_fin'].forEach(id=>{const el=document.getElementById(id);if(el)el.value='';});
-    document.getElementById('modalVoyage').classList.add('open');
-  } else {
+  if(READONLY)return;editingId=null;
+  if(currentTab==='vols'){
+    document.getElementById('modalVolTitle').textContent='Ajouter un vol';
+    ['vol_destination','vol_prix','vol_compagnie','vol_compagnie_retour','vol_aller','vol_retour','vol_hdep','vol_harr','vol_rhdep','vol_rharr','vol_num_aller','vol_num_retour','vol_dur_aller','vol_dur_retour','vol_lien','vol_notes','vol_escale'].forEach(id=>{const el=document.getElementById(id);if(el)el.value=''});
+    document.getElementById('vol_origine').value='CDG';
+    document.getElementById('vol_aeroport_retour').value='';
+    document.getElementById('vol_iata_dest').value='';
+    document.getElementById('vol_escale_toggle').checked=false;
+    document.getElementById('escale-fields').style.display='none';
+    document.getElementById('airline-preview').style.display='none';
+    document.getElementById('dur-preview-aller').style.display='none';
+    document.getElementById('dur-preview-retour').style.display='none';
     document.getElementById('modalVol').classList.add('open');
+  } else if(currentTab==='hotels'){
+    document.getElementById('modalHotelTitle').textContent='Ajouter un hôtel';
+    ['hotel_destination','hotel_nom','hotel_quartier','hotel_prix','hotel_note','hotel_checkin','hotel_checkout','hotel_lien','hotel_notes'].forEach(id=>{const el=document.getElementById(id);if(el)el.value=''});
+    setStar(0);document.getElementById('hotel_lp').style.display='none';
+    document.getElementById('nights-preview').style.display='none';
+    document.getElementById('modalHotel').classList.add('open');
+  } else {
+    ['voyage_nom','voyage_destination','voyage_notes','voyage_debut','voyage_fin'].forEach(id=>{const el=document.getElementById(id);if(el)el.value=''});
+    document.getElementById('voyage_vol').value='';document.getElementById('voyage_hotel').value='';
+    document.getElementById('modalVoyage').classList.add('open');
   }
 }
+
+function closeModals(){document.querySelectorAll('.modal-overlay').forEach(m=>m.classList.remove('open'));editingId=null;}
 function switchTab(tab,el){
-  currentTab=tab;
-  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  currentTab=tab;document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
   el.classList.add('active');
-  document.getElementById('mainAddBtn').textContent=tab==='hotels'?'+ Hôtel':tab==='voyages'?'+ Voyage':'+ Vol';
-  const ag=document.querySelector('#airlineFilter')?.closest('.filter-group');
-  if(ag)ag.style.display=tab==='vols'?'':'none';
-  renderCurrent();
+  const labels={vols:'+ Vol',hotels:'+ Hôtel',voyages:'+ Voyage'};
+  document.getElementById('mainAddBtn').textContent=labels[tab];renderCurrent();
 }
-function setOrigin(val,el){
-  currentOrigin=val;
-  document.querySelectorAll('#originPills .fpill').forEach(p=>p.classList.remove('active'));
-  el.classList.add('active');
-  renderCurrent();
+function setSort(sort,el){
+  currentSort=sort;document.querySelectorAll('.filter-pills .fpill').forEach(b=>b.classList.remove('active'));
+  el.classList.add('active');renderCurrent();
 }
-function setSort(val,el){
-  currentSort=val;
-  document.querySelectorAll('.filter-pills .fpill[id^="sort"]').forEach(p=>p.classList.remove('active'));
-  el.classList.add('active');
-  renderCurrent();
+function setOrigin(o,el){
+  currentOrigin=o;document.querySelectorAll('#originPills .fpill').forEach(b=>b.classList.remove('active'));
+  el.classList.add('active');renderCurrent();
 }
 function resetFilters(){
   currentOrigin='all';currentSort='prix';
-  document.querySelectorAll('#originPills .fpill').forEach((p,i)=>p.classList.toggle('active',i===0));
   document.getElementById('destFilter').value='all';
   document.getElementById('airlineFilter').value='all';
   document.getElementById('budgetFilter').value='';
   document.getElementById('monthFilter').value='all';
+  document.querySelectorAll('#originPills .fpill').forEach((b,i)=>b.classList.toggle('active',i===0));
   document.getElementById('sortPrix').classList.add('active');
   document.getElementById('sortDate').classList.remove('active');
   renderCurrent();
 }
 function previewLink(inputId,previewId){
-  const val=document.getElementById(inputId).value;
-  const lp=document.getElementById(previewId);
-  if(val.startsWith('http')){lp.style.display='block';try{lp.textContent='🔗 '+new URL(val).hostname;}catch{lp.textContent=val.slice(0,50);}}
-  else lp.style.display='none';
-}
-function showToast(msg){
-  const t=document.getElementById('toast');
-  t.textContent=msg;t.classList.add('show');
-  setTimeout(()=>t.classList.remove('show'),2500);
+  const val=document.getElementById(inputId).value;const preview=document.getElementById(previewId);
+  if(val.startsWith('http')){preview.style.display='block';try{preview.textContent='🔗 '+new URL(val).hostname;}catch{preview.textContent=val.slice(0,50);}}
+  else preview.style.display='none';
 }
 function shareMode(){
-  const url=new URL(window.location.href);
-  url.searchParams.set('share','1');
-  navigator.clipboard.writeText(url.toString()).then(()=>showToast('Lien copié ! 🔗'));
+  const url=window.location.origin+window.location.pathname+'?share=1';
+  navigator.clipboard.writeText(url).then(()=>showToast('🔗 Lien copié !'));
 }
-document.addEventListener('DOMContentLoaded',()=>{
-  populateDataLists();
-  loadAll();
-  document.querySelectorAll('.modal-overlay').forEach(m=>{
-    m.addEventListener('click',e=>{if(e.target===m)closeModals();});
-  });
-});
+function showToast(msg){
+  const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'),2500);
+}
+document.querySelectorAll('.modal-overlay').forEach(m=>{m.addEventListener('click',e=>{if(e.target===m)closeModals()});});
+if(READONLY)document.getElementById('mainAddBtn').style.display='none';
+populateDataLists();
+buildMonthFilter();
+loadAll();
 </script>
 </body>
 </html>
