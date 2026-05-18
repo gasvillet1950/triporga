@@ -877,7 +877,7 @@ function renderVols(){
     const iataRet=v.aeroport_retour||iataO;
     const flag=FLAGS[iataD]||'🌍';
     const stopText=v.escale_ville?`Escale ${v.escale_ville}`:'direct';
-    const hasReturn=v.date_retour&&v.date_retour!==v.date_aller;
+    const hasReturn=!!v.date_retour;
     const aRet=v.compagnie_retour?getAirlineByName(v.compagnie_retour):null;
     const prix2=v.prix?Math.round(v.prix*2):null;
     return`<div class="vol-card" style="animation-delay:${i*0.04}s">
@@ -897,7 +897,7 @@ ${hasReturn?`<div class="fdivider"></div>${flightRowHTML('Ret.',v.heure_depart_r
 <div class="vol-card-footer">
 <div class="dates-row">
 ${v.date_aller?`<span class="date-chip">🛫 ${fmtDate(v.date_aller)}</span>`:''}
-${hasReturn?`<span class="date-chip">🛬 ${fmtDate(v.date_retour)}</span>`:''}
+${?`<span class="date-chip">🛬 ${fmtDate(v.date_retour)}</span>`:''}
 </div>
 <div class="price-wrap" onclick="togglePriceDuo(this)">
 <div class="price-main">${v.prix?Math.round(v.prix)+'€':'—'}</div>
